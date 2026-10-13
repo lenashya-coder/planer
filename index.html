@@ -272,6 +272,9 @@ h2{font-size:clamp(26px,4.5vw,34px);line-height:1.05}
 .pst.rev{background:rgba(244,156,196,.25);border-color:var(--pink)} .pst.fix{background:rgba(255,90,78,.15);border-color:var(--bad)}
 .pst.save{background:rgba(255,176,32,.18);border-color:var(--warn)} .pst.print{background:rgba(160,120,230,.18);border-color:#A078E6}
 .pst.send{background:rgba(53,208,127,.2);border-color:var(--ok)}
+.pst.done{background:var(--ok);border-color:var(--ok);color:#06220f}
+.srow.isdone{opacity:.55}
+.srow.isdone textarea{text-decoration:line-through}
 .slink{flex:none;align-self:center;border:0;background:transparent;color:var(--blue);font-size:15px;padding:0 2px;text-decoration:none}
 .sempty{padding:14px 10px;color:var(--card-muted);font-size:14px}
 .dl{font-size:11px;color:var(--card-muted);white-space:nowrap}
@@ -812,7 +815,7 @@ function renderProg(){
 }
 
 /* ---------- сводка проектов ---------- */
-const PST=[["none","Не начат"],["start","Начат"],["dev","В разработке"],["rev","На согласовании"],["fix","Внести правки"],["save","Сохранить"],["print","Подготовить к печати"],["send","Отправить"]];
+const PST=[["none","Не начат"],["start","Начат"],["dev","В разработке"],["rev","На согласовании"],["fix","Внести правки"],["save","Сохранить"],["print","Подготовить к печати"],["send","Отправить"],["done","Готово"]];
 const pstName=k=>(PST.find(x=>x[0]===k)||PST[0])[1];
 const vcache=new Map();
 function projTask(p){
@@ -830,6 +833,7 @@ function projTask(p){
   return v;
 }
 function dlState(p){
+  if(p.status==="done")return "";
   if(!p.deadline)return "";
   const d=Math.round((fromKey(p.deadline)-today())/864e5);
   return d<0?"bad":d<=2?"warn":"";
@@ -856,12 +860,12 @@ let growers=[];
 window.addEventListener("resize",()=>growers.forEach(f=>f()));
 function renderSummary(){
   const box=$("sumT");if(!box)return;box.textContent="";growers=[];
-  const ps=(S.projects||[]).slice().sort((a,b)=>(a.deadline||"9999")<(b.deadline||"9999")?-1:(a.deadline||"9999")>(b.deadline||"9999")?1:(a.created||0)-(b.created||0));
-  $("prCnt").textContent=ps.length;$("prHot").textContent=ps.filter(p=>dlState(p)).length;
+  const ps=(S.projects||[]).slice().sort((a,b)=>(a.status==="done")!==(b.status==="done")?(a.status==="done"?1:-1):(a.deadline||"9999")<(b.deadline||"9999")?-1:(a.deadline||"9999")>(b.deadline||"9999")?1:(a.created||0)-(b.created||0));
+  $("prCnt").textContent=ps.filter(p=>p.status!=="done").length;$("prHot").textContent=ps.filter(p=>dlState(p)).length;
   if(!ps.length){box.append(mk("div","sempty","Проектов пока нет. Нажмите «+ Проект», чтобы добавить первый."));return}
   const hd=mk("div","srow shead");["Клиент","Проект","Статус","Дедлайн","Когда беру в работу","Связь","Важно",""].forEach(t=>hd.append(mk("span",null,t)));box.append(hd);
   ps.forEach(p=>{
-    const r=mk("div","srow "+dlState(p));r.dataset.p=p.id;
+    const r=mk("div","srow "+dlState(p)+(p.status==="done"?" isdone":""));r.dataset.p=p.id;
     const cell=(label,cls,...els)=>{const c=mk("label","scell"+(cls?" "+cls:""));c.append(mk("span","cl",label));
       if(els.length>1){const w=mk("div","two");w.append(...els);c.append(w)}else c.append(els[0]);return c};
     let st;const later=()=>{clearTimeout(st);st=setTimeout(save,500)};
