@@ -66,6 +66,25 @@ input,textarea{font:inherit;color:inherit}
 .cal-grid{display:grid;grid-template-columns:44px repeat(7,minmax(120px,1fr));min-width:900px;position:relative}
 .cal-head{position:sticky;top:0;z-index:2;background:var(--card);padding:12px 10px 10px;border-bottom:1px solid var(--card-line);
   display:flex;justify-content:space-between;align-items:baseline;border-left:1px solid var(--card-line);cursor:pointer;min-height:58px}
+.cal-head{flex-wrap:wrap}
+.bunny{flex-basis:100%;display:flex;align-items:center;gap:6px;margin-top:6px;padding:3px 8px 3px 4px;border-radius:999px;width:max-content;max-width:100%;font-size:10.5px;color:#3a3a40;line-height:1}
+.bunny svg{width:32px;height:35px;flex:none;display:block}
+.bunny.l0{background:#E8F5EE} .bunny.l1{background:#DDEFFB} .bunny.l2{background:#FCE3EF} .bunny.l3{background:#FFEBCF} .bunny.l4{background:#FFD9D4}
+.bunny b{font-weight:600}
+.bunny.l4 svg{animation:shake .6s ease-in-out infinite alternate}
+@keyframes shake{from{transform:rotate(-4deg)}to{transform:rotate(4deg)}}
+@media (prefers-reduced-motion:reduce){.bunny.l4 svg{animation:none}}
+@media (max-width:600px){.bunny .w{display:none}.bunny{padding:2px 8px 2px 3px}}
+.card.beauty{background:linear-gradient(165deg,#FFFDF0 0%,#FFF5C2 55%,#F7E68E 100%);color:#3D3510;--card-muted:#8C7F3E;--card-line:#EFE2A6}
+.card.beauty .card-h{color:#3D3510} .card.beauty .card-h .icon{color:#C9A818}
+.card.beauty .ck{border-color:#D4B52A} .card.beauty .task.done .ck{background:#E2C540;border-color:#E2C540}
+.card.beauty .addbtn{color:#9C8414}
+.card.home{background:linear-gradient(165deg,#F8FFF0 0%,#E3F6CC 55%,#C3E89A 100%);color:#22381A;--card-muted:#5F7E4C;--card-line:#CFE8B5}
+.card.home .card-h{color:#22381A} .card.home .card-h .icon{color:#6DB03A}
+.card.home .ck{border-color:#7DBE4C} .card.home .task.done .ck{background:#8CCB59;border-color:#8CCB59}
+.card.home .addbtn{color:#4E8C25}
+.chipc.beauty{background:#FFF2B8;color:#3D3510} .chipc.beauty .t{color:#8C7F3E}
+.chipc.home{background:#DDF3C4;color:#22381A} .chipc.home .t{color:#5F7E4C}
 .cal-head.corner{border-left:0;cursor:default;left:0;z-index:3}
 .cal-head .wd{font-size:12px;color:var(--card-muted)}
 .cal-head .dn{font-size:22px;font-weight:300;color:var(--card-muted);line-height:1}
@@ -392,6 +411,8 @@ const ICONS={
   tg:'<svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M21.4 4.2 2.9 11.3c-1.3.5-1.2 1.3-.2 1.6l4.7 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.5c.3-1.3-.5-1.8-1.4-1.2zM8.3 14l9.6-6.1c.5-.3.9-.1.5.2l-8 7.3-.3 3.4L8.3 14z"/></svg>',
   ig:'<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>',
   design:'<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4.5l5 5L9 20H4v-5z"/><path d="M12.5 6.5l5 5"/></svg>',
+  beauty:'<svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.8 5.4L19 9l-5.2 1.6L12 16l-1.8-5.4L5 9l5.2-1.6z"/><path d="M18.5 14l.9 2.6 2.6.9-2.6.9-.9 2.6-.9-2.6-2.6-.9 2.6-.9z"/></svg>',
+  home:'<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3.5 11L12 4l8.5 7"/><path d="M6 9.5V20h12V9.5"/><path d="M10 20v-5h4v5"/></svg>',
   life:'<svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 20.5s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.9c0 5.4-7.5 10-7.5 10z"/></svg>',
   imp:'<svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg>',
   pin:'<svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.6 19.3c-.1-.8-.2-2 0-2.9l1.2-5s-.3-.6-.3-1.5c0-1.4.8-2.4 1.8-2.4.8 0 1.2.6 1.2 1.4 0 .8-.5 2.1-.8 3.2-.2 1 .5 1.8 1.5 1.8 1.8 0 3.2-1.9 3.2-4.7 0-2.5-1.8-4.2-4.3-4.2-2.9 0-4.6 2.2-4.6 4.4 0 .9.3 1.8.8 2.3l.1.4-.3 1.1c0 .2-.2.3-.4.2-1.3-.6-2.1-2.5-2.1-4 0-3.3 2.4-6.3 6.9-6.3 3.6 0 6.4 2.6 6.4 6 0 3.6-2.3 6.5-5.4 6.5-1.1 0-2.1-.6-2.4-1.2l-.7 2.5c-.2.9-.9 2.1-1.3 2.8A10 10 0 1 0 12 2z"/></svg>',
@@ -399,7 +420,7 @@ const ICONS={
 };
 
 /* ---------- состояние ---------- */
-const DEFAULT_COLS=[{id:"imp",name:"Задачи на сегодня",icon:"imp"},{id:"other",name:"Дизайн",icon:"design"},{id:"life",name:"Личное",icon:"life"},{id:"tg",name:"Telegram",icon:"tg"},{id:"ig",name:"Instagram",icon:"ig"},{id:"pin",name:"Pinterest",icon:"pin"}];
+const DEFAULT_COLS=[{id:"beauty",name:"Beauty-процедуры",icon:"beauty"},{id:"home",name:"Дом",icon:"home"},{id:"other",name:"Дизайн",icon:"design"},{id:"life",name:"Личное",icon:"life"},{id:"tg",name:"Telegram",icon:"tg"},{id:"ig",name:"Instagram",icon:"ig"},{id:"pin",name:"Pinterest",icon:"pin"}];
 function blank(){return{v:2,cols:DEFAULT_COLS.map(c=>({...c})),tasks:[],posts:{tg:[],ig:[],igs:[],pin:[]},notes:[],drafts:{proj:"",post:""},clients:[],projects:[]}}
 function norm(s){
   const b=blank(); if(!s||typeof s!=="object")return b;
@@ -420,6 +441,14 @@ function norm(s){
     b.cols=b.cols.filter(x=>x.id!=="other"&&x.id!=="life");
     const i=b.cols.findIndex(x=>x.id==="imp");b.cols.splice(i<0?0:i+1,0,o,l);
     b.m3=true;b.__mig=true;
+  }
+  b.m4=!!s.m4;
+  if(!b.m4){ // убрать «Задачи на сегодня», добавить Beauty и Дом
+    b.tasks.forEach(t=>{if(t.col==="imp")t.col="life"});
+    b.cols=b.cols.filter(x=>x.id!=="imp");
+    if(!b.cols.some(x=>x.id==="home"))b.cols.unshift({id:"home",name:"Дом",icon:"home"});
+    if(!b.cols.some(x=>x.id==="beauty"))b.cols.unshift({id:"beauty",name:"Beauty-процедуры",icon:"beauty"});
+    b.m4=true;b.__mig=true;
   }
   b.m2=!!s.m2;
   if(!b.m2){const c=b.cols.find(x=>x.id==="imp");if(c&&c.name==="Самое важное")c.name="Задачи на сегодня";b.m2=true;b.__mig=true}
@@ -662,6 +691,28 @@ document.addEventListener("contextmenu",e=>{if(DRAG.t)e.preventDefault()});
 document.addEventListener("click",e=>{if(Date.now()-DRAG.justDropped<400){e.stopPropagation();e.preventDefault()}},true);
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&DRAG.on)endDrag(false)});
 
+/* ---------- зайчик загруженности дня ---------- */
+const LOADS=[["свободно","Свободный день — можно отдыхать"],["легко","Лёгкий день"],["норм","Обычный день"],["плотно","Плотный день"],["завал","Перегруз — может, что-то перенести?"]];
+const loadLevel=n=>n===0?0:n<=2?1:n<=4?2:n<=6?3:4;
+function bunnySVG(l){
+  const ink="#3a3a40",ch="#F7A8C8";
+  const earL=l>=3?'<path d="M9 11 C3 9 1 4 4 3 C7 2 9 7 10 10" fill="#fff" stroke="'+ink+'" stroke-width="1.3"/>':'<ellipse cx="9" cy="6.5" rx="2.6" ry="6" fill="#fff" stroke="'+ink+'" stroke-width="1.3"/><ellipse cx="9" cy="6.8" rx="1.1" ry="4" fill="'+ch+'"/>';
+  const earR=l>=4?'<path d="M15 11 C21 9 23 4 20 3 C17 2 15 7 14 10" fill="#fff" stroke="'+ink+'" stroke-width="1.3"/>':'<ellipse cx="15" cy="6.5" rx="2.6" ry="6" fill="#fff" stroke="'+ink+'" stroke-width="1.3"/><ellipse cx="15" cy="6.8" rx="1.1" ry="4" fill="'+ch+'"/>';
+  let eyes,mouth,extra="";
+  if(l===0){eyes='<path d="M8.6 17.2q1.2 1 2.4 0M13 17.2q1.2 1 2.4 0" fill="none" stroke="'+ink+'" stroke-width="1.1" stroke-linecap="round"/>';mouth='<path d="M11.3 20.2q.7.5 1.4 0" fill="none" stroke="'+ink+'" stroke-width="1" stroke-linecap="round"/>';extra='<text x="18.5" y="11" font-size="5" font-family="sans-serif" fill="'+ink+'">z</text><text x="21" y="7.5" font-size="4" font-family="sans-serif" fill="'+ink+'">z</text>'}
+  else if(l===1){eyes='<circle cx="9.8" cy="17" r="1" fill="'+ink+'"/><circle cx="14.2" cy="17" r="1" fill="'+ink+'"/>';mouth='<path d="M10.6 19.6q1.4 1.4 2.8 0" fill="none" stroke="'+ink+'" stroke-width="1.1" stroke-linecap="round"/>'}
+  else if(l===2){eyes='<circle cx="9.8" cy="17" r="1" fill="'+ink+'"/><circle cx="14.2" cy="17" r="1" fill="'+ink+'"/>';mouth='<path d="M11 20h2" stroke="'+ink+'" stroke-width="1.1" stroke-linecap="round"/>'}
+  else if(l===3){eyes='<path d="M8.8 16.4l2 .8M15.2 16.4l-2 .8" stroke="'+ink+'" stroke-width="1" stroke-linecap="round"/><circle cx="9.9" cy="17.6" r=".9" fill="'+ink+'"/><circle cx="14.1" cy="17.6" r=".9" fill="'+ink+'"/>';mouth='<path d="M10.8 20.6q1.2-1 2.4 0" fill="none" stroke="'+ink+'" stroke-width="1.1" stroke-linecap="round"/>'}
+  else {eyes='<path d="M8.9 16.2l1.8 1.8M10.7 16.2l-1.8 1.8M13.3 16.2l1.8 1.8M15.1 16.2l-1.8 1.8" stroke="'+ink+'" stroke-width="1" stroke-linecap="round"/>';mouth='<ellipse cx="12" cy="20.6" rx="1" ry="1.2" fill="'+ink+'"/>';extra='<path d="M18.6 13.2q1.4 2 0 2.8q-1.4-.8 0-2.8z" fill="#7CC6EC"/>'}
+  return '<svg viewBox="0 0 24 26" aria-hidden="true">'+earL+earR+'<circle cx="12" cy="18" r="6.6" fill="#fff" stroke="'+ink+'" stroke-width="1.3"/><circle cx="8.3" cy="19.3" r="1.1" fill="'+ch+'" opacity=".8"/><circle cx="15.7" cy="19.3" r="1.1" fill="'+ch+'" opacity=".8"/>'+eyes+mouth+extra+'</svg>';
+}
+function bunnyEl(k){
+  const ts=dayTasks(k),n=ts.length,left=ts.filter(t=>!isDone(t,k)).length,l=loadLevel(n);
+  const b=mk("div","bunny l"+l);b.innerHTML=bunnySVG(l);
+  b.append(mk("span","w",LOADS[l][0]));if(n)b.append(mk("b","c",String(n)));
+  b.title=LOADS[l][1]+(n?": "+n+" "+plural(n,"задача","задачи","задач")+(left!==n?", осталось "+left:""):"");
+  return b;
+}
 function renderCal(){
   const g=$("cal"); g.textContent="";
   const tk=key(today()),sk=key(sel);
@@ -680,7 +731,7 @@ function renderCal(){
     if(postDays.pin.has(k)){const b=mk("span","badge"+(dayOf(lastPin)===k?" last":""));b.innerHTML=ICONS.pin;b.title="Пин в Pinterest";bs.append(b)}
     const dls=(S.projects||[]).filter(p=>p.deadline===k);
     if(false&&dls.length){const b=mk("span","badge ddl","⚑ "+dls.length);b.title="Дедлайн: "+dls.map(p=>[p.client,p.title].filter(Boolean).join(" — ")||"проект").join(", ");bs.append(b)}
-    l.append(bs);h.append(l,mk("div","dn",d.getDate()));
+    l.append(bs);h.append(l,mk("div","dn",d.getDate()),bunnyEl(k));
     const go=()=>{sel=d;render()};h.addEventListener("click",go);h.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go()}});
     g.append(h);
   });
@@ -690,7 +741,7 @@ function renderCal(){
       const k=key(d);const c=mk("div","cal-cell"+(k===sk?" selcol":""));c.dataset.drop=k;c.dataset.hour=hr;
       dayTasks(k).filter(t=>t.time&&+t.time.slice(0,2)===hr).sort(byTime).forEach(t=>{
         const col=S.cols.find(x=>x.id===t.col)||{icon:"dot"};
-        const ch=mk("button","chipc"+(t.col==="imp"?" imp":t.col==="other"?" design":t.col==="life"?" life":"")+(isDone(t,k)?" done":""));ch.type="button";
+        const ch=mk("button","chipc"+(t.col==="imp"?" imp":t.col==="other"?" design":t.col==="life"?" life":t.col==="beauty"?" beauty":t.col==="home"?" home":"")+(isDone(t,k)?" done":""));ch.type="button";
         ch.innerHTML='<span class="t"></span>'+(col.icon!=="dot"&&t.col!=="imp"&&ICONS[col.icon]?ICONS[col.icon]:"")+'<span class="x"></span>';
         ch.querySelector(".t").textContent=t.time;ch.querySelector(".x").textContent=t.text;ch.title=t.text;
         ch.addEventListener("click",()=>{sel=d;render();$("cols").scrollIntoView({behavior:"smooth",block:"start"})});makeDraggable(ch,t,t.text);
@@ -707,7 +758,7 @@ function renderCols(){
   const wrap=$("cols"),sx=wrap.scrollLeft; wrap.textContent="";
   const k=key(sel);
   S.cols.forEach(c=>{
-    const w=mk("div","colw");const card=mk("div","card"+(c.id==="imp"?" imp":c.id==="other"?" design":c.id==="life"?" life":""));
+    const w=mk("div","colw");const card=mk("div","card"+(c.id==="imp"?" imp":c.id==="other"?" design":c.id==="life"?" life":c.id==="beauty"?" beauty":c.id==="home"?" home":""));
     const ts=dayTasks(k).filter(t=>t.col===c.id).sort(byTime);
     const act=ts.filter(t=>!isDone(t,k)),dn=ts.filter(t=>isDone(t,k));
     const h=mk("div","card-h");h.innerHTML=c.id==="imp"?"":ICONS[c.icon]||ICONS.dot;
