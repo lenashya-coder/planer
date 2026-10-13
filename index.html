@@ -254,7 +254,7 @@ h2{font-size:clamp(26px,4.5vw,34px);line-height:1.05}
   .est-row .lt{align-self:center}
 }
 .sumt{background:var(--card);color:var(--card-ink);border-radius:22px;padding:8px 10px;overflow-x:auto}
-.srow{display:grid;grid-template-columns:minmax(110px,1fr) minmax(150px,1.4fr) 176px 132px 222px minmax(110px,1fr) minmax(150px,1.4fr) 26px;gap:6px;align-items:center;padding:6px 4px 6px 10px;border-left:4px solid transparent;border-radius:10px;min-width:1100px}
+.srow{display:grid;grid-template-columns:minmax(120px,1fr) minmax(170px,1.4fr) 186px 222px minmax(130px,1fr) minmax(180px,1.5fr) 26px;gap:6px;align-items:center;padding:6px 4px 6px 10px;border-left:4px solid transparent;border-radius:10px;min-width:1000px}
 .srow+.srow{border-top:1px solid var(--card-line)}
 .srow.shead{font-size:11px;color:var(--card-muted);padding-top:4px;padding-bottom:4px}
 .srow.warn{border-left-color:var(--warn)} .srow.bad{border-left-color:var(--bad)}
@@ -344,7 +344,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
   </section>
 
   <div class="sec-head"><div class="sec-title"><h2>Сводка проектов</h2></div>
-    <div class="stats"><button class="newcol" id="prAdd" type="button">+ Проект</button><span>В работе<b id="prCnt">0</b></span><span>Дедлайн скоро<b id="prHot">0</b></span></div></div>
+    <div class="stats"><button class="newcol" id="prAdd" type="button">+ Проект</button><span>В работе<b id="prCnt">0</b></span></div></div>
   <section class="sumt" id="sumT" aria-label="Сводка проектов"></section>
 
   <div id="insights"></div>
@@ -679,7 +679,7 @@ function renderCal(){
     if(postDays.ig.has(k)){const b=mk("span","badge"+(dayOf(lastIg)===k?" last":""));b.innerHTML=ICONS.ig;b.title="Публикация в Instagram";bs.append(b)}
     if(postDays.pin.has(k)){const b=mk("span","badge"+(dayOf(lastPin)===k?" last":""));b.innerHTML=ICONS.pin;b.title="Пин в Pinterest";bs.append(b)}
     const dls=(S.projects||[]).filter(p=>p.deadline===k);
-    if(dls.length){const b=mk("span","badge ddl","⚑ "+dls.length);b.title="Дедлайн: "+dls.map(p=>[p.client,p.title].filter(Boolean).join(" — ")||"проект").join(", ");bs.append(b)}
+    if(false&&dls.length){const b=mk("span","badge ddl","⚑ "+dls.length);b.title="Дедлайн: "+dls.map(p=>[p.client,p.title].filter(Boolean).join(" — ")||"проект").join(", ");bs.append(b)}
     l.append(bs);h.append(l,mk("div","dn",d.getDate()));
     const go=()=>{sel=d;render()};h.addEventListener("click",go);h.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go()}});
     g.append(h);
@@ -832,13 +832,13 @@ function projTask(p){
   }
   return v;
 }
-function dlState(p){
+function dlState(p){return "";
   if(p.status==="done")return "";
   if(!p.deadline)return "";
   const d=Math.round((fromKey(p.deadline)-today())/864e5);
   return d<0?"bad":d<=2?"warn":"";
 }
-function dlText(p){
+function dlText(p){return "";
   if(!p.deadline)return "";
   const d=Math.round((fromKey(p.deadline)-today())/864e5);
   return d<0?"дедлайн прошёл "+fmtDay(p.deadline):d===0?"дедлайн сегодня":d===1?"дедлайн завтра":"дедлайн "+fmtDay(p.deadline)+" · через "+d+" "+plural(d,"день","дня","дней");
@@ -860,10 +860,10 @@ let growers=[];
 window.addEventListener("resize",()=>growers.forEach(f=>f()));
 function renderSummary(){
   const box=$("sumT");if(!box)return;box.textContent="";growers=[];
-  const ps=(S.projects||[]).slice().sort((a,b)=>(a.status==="done")!==(b.status==="done")?(a.status==="done"?1:-1):(a.deadline||"9999")<(b.deadline||"9999")?-1:(a.deadline||"9999")>(b.deadline||"9999")?1:(a.created||0)-(b.created||0));
-  $("prCnt").textContent=ps.filter(p=>p.status!=="done").length;$("prHot").textContent=ps.filter(p=>dlState(p)).length;
+  const ps=(S.projects||[]).slice().sort((a,b)=>(a.status==="done")!==(b.status==="done")?(a.status==="done"?1:-1):((a.workDate||"9999")+(a.workTime||""))<((b.workDate||"9999")+(b.workTime||""))?-1:((a.workDate||"9999")+(a.workTime||""))>((b.workDate||"9999")+(b.workTime||""))?1:(a.created||0)-(b.created||0));
+  $("prCnt").textContent=ps.filter(p=>p.status!=="done").length;
   if(!ps.length){box.append(mk("div","sempty","Проектов пока нет. Нажмите «+ Проект», чтобы добавить первый."));return}
-  const hd=mk("div","srow shead");["Клиент","Проект","Статус","Дедлайн","Когда беру в работу","Связь","Важно",""].forEach(t=>hd.append(mk("span",null,t)));box.append(hd);
+  const hd=mk("div","srow shead");["Клиент","Проект","Статус","Когда беру в работу","Связь","Важно",""].forEach(t=>hd.append(mk("span",null,t)));box.append(hd);
   ps.forEach(p=>{
     const r=mk("div","srow "+dlState(p)+(p.status==="done"?" isdone":""));r.dataset.p=p.id;
     const cell=(label,cls,...els)=>{const c=mk("label","scell"+(cls?" "+cls:""));c.append(mk("span","cl",label));
@@ -879,7 +879,7 @@ function renderSummary(){
     const ci=txt("client","Клиент"),ti=txt("title","Проект");
     const sg=mk("select","pst");fillSel(sg,PST,p.status||"none");sg.classList.add(sg.value);sg.setAttribute("aria-label","Статус");
     sg.addEventListener("change",()=>{p.status=sg.value;save();render()});
-    const dd=date("deadline","Дедлайн"),wd=date("workDate","Когда беру в работу");
+    const wd=date("workDate","Когда беру в работу");
     const wt=mk("input");wt.type="time";wt.value=p.workTime||"";wt.setAttribute("aria-label","Время");
     wt.addEventListener("change",()=>{p.workTime=wt.value;save();render()});
     const co=txt("contact","@ник, телефон, ссылка");
@@ -887,7 +887,7 @@ function renderSummary(){
     const cw=[co];if(href){const a=mk("a","slink","↗");a.href=href;a.target="_blank";a.rel="noopener";a.title="Открыть";cw.push(a)}
     const del=btn("tdel","×",()=>{if(confirm("Удалить проект «"+(p.title||p.client||"без названия")+"»?")){S.projects=S.projects.filter(x=>x.id!==p.id);save();render()}},"Удалить проект");
     const im=txt("important","Что важно не забыть");
-    r.append(cell("Клиент","",ci),cell("Проект","",ti),cell("Статус","",sg),cell("Дедлайн","",dd),
+    r.append(cell("Клиент","",ci),cell("Проект","",ti),cell("Статус","wide",sg),
       cell("Когда беру в работу","wide",wd,wt),cell("Связь","wide",...cw),cell("Важно","wide",im),del);
     box.append(r);
   });
