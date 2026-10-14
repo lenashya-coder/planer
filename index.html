@@ -293,7 +293,7 @@ h2{font-size:clamp(26px,4.5vw,34px);line-height:1.05}
 .pst.send{background:rgba(53,208,127,.2);border-color:var(--ok)}
 .pst.done{background:var(--ok);border-color:var(--ok);color:#06220f}
 .srow.isdone{opacity:.55}
-.srow.isdone textarea{text-decoration:line-through}
+.srow.isdone textarea:not(:placeholder-shown){text-decoration:line-through}
 .slink{flex:none;align-self:center;border:0;background:transparent;color:var(--blue);font-size:15px;padding:0 2px;text-decoration:none}
 .sempty{padding:14px 10px;color:var(--card-muted);font-size:14px}
 .dl{font-size:11px;color:var(--card-muted);white-space:nowrap}
@@ -312,6 +312,10 @@ h2{font-size:clamp(26px,4.5vw,34px);line-height:1.05}
   .srow .tdel{position:absolute;right:8px;top:6px}
   .srow{position:relative}
 }
+.bflag{border:0;border-radius:999px;padding:3px 9px;font-size:11.5px;font-weight:600;background:#FFE7A8;color:#5A4300;white-space:nowrap;margin-top:4px;align-self:flex-start}
+.bflag.paid{background:#CFF3DE;color:#0E5A2E}
+.scell .stwrap{display:flex;flex-direction:column;width:100%}
+.pc.flash{animation:fl 1.6s ease}
 .pempty{color:var(--muted);font-size:14px;padding:4px 2px}
 @media (max-width:520px){.payform .pf-grid{grid-template-columns:1fr 1fr}.payform .pf-grid #pfName,.payform .pf-grid #pfSum{grid-column:auto}}
 .syncb{background:var(--card);color:var(--card-ink);border-radius:18px;padding:14px 16px;margin-bottom:18px;border:2px solid var(--warn)}
@@ -929,7 +933,7 @@ function renderSummary(){
       i.addEventListener("change",()=>{if(field==="workDate"&&i.value!==p.workDate)p.workDone=false;p[field]=i.value;save();render()});return i};
     const ci=txt("client","Клиент"),ti=txt("title","Проект");
     const sg=mk("select","pst");fillSel(sg,PST,p.status||"none");sg.classList.add(sg.value);sg.setAttribute("aria-label","Статус");
-    sg.addEventListener("change",()=>{p.status=sg.value;save();render()});
+    sg.addEventListener("change",()=>setProjStatus(p,sg.value));
     const wd=date("workDate","Когда беру в работу");
     const wt=mk("input");wt.type="time";wt.value=p.workTime||"";wt.setAttribute("aria-label","Время");
     wt.addEventListener("change",()=>{p.workTime=wt.value;save();render()});
@@ -938,7 +942,8 @@ function renderSummary(){
     const cw=[co];if(href){const a=mk("a","slink","↗");a.href=href;a.target="_blank";a.rel="noopener";a.title="Открыть";cw.push(a)}
     const del=btn("tdel","×",()=>{if(confirm("Удалить проект «"+(p.title||p.client||"без названия")+"»?")){S.projects=S.projects.filter(x=>x.id!==p.id);save();render()}},"Удалить проект");
     const im=txt("important","Что важно не забыть");
-    r.append(cell("Клиент","",ci),cell("Проект","",ti),cell("Статус","wide",sg),
+    const stw=mk("div","stwrap");stw.append(sg);const bf=billFlag(p);if(bf)stw.append(bf);
+    r.append(cell("Клиент","",ci),cell("Проект","",ti),cell("Статус","wide",stw),
       cell("Когда беру в работу","wide",wd,wt),cell("Связь","wide",...cw),cell("Важно","wide",im),del);
     box.append(r);
   });
@@ -946,7 +951,7 @@ function renderSummary(){
 function projMini(t,k){
   const p=t.proj,w=mk("div","pmini");
   const sg=mk("select","pst "+(p.status||"none"));fillSel(sg,PST,p.status||"none");sg.setAttribute("aria-label","Статус");
-  sg.addEventListener("change",()=>{p.status=sg.value;save();render()});
+  sg.addEventListener("change",()=>setProjStatus(p,sg.value));
   w.append(sg,btn("chipbtn","Открыть в сводке",()=>openInSummary(p)));
   const href=contactHref(p.contact);if(href){const a=mk("a","chipbtn","Связь ↗");a.href=href;a.target="_blank";a.rel="noopener";a.style.textDecoration="none";w.append(a)}
   return w;
@@ -956,6 +961,49 @@ $("prAdd").addEventListener("click",()=>{
   S.projects.push(p);save();render();
   const r=document.querySelector('.srow[data-p="'+p.id+'"]');if(r){r.scrollIntoView({behavior:"smooth",block:"center"});const i=r.querySelector("input");if(i)i.focus()}
 });
+/* ---------- «Готово» → в оплату ---------- */
+const DNK_NAME="ДНК Фактори - фабрика ИП РЯБИНОВ Е.А.";
+const isDnk=p=>/днк|dnk/i.test(p.client||"");
+function billProject(p){
+  if(p.billed)return;
+  const k=key(today()),item={id:uid(),name:(p.title||"").trim()||(p.client||"").trim()||"Проект",qty:1,price:"",date:k,fromProject:p.id};
+  let c,created=false;
+  if(isDnk(p)){c=S.clients.find(x=>!x.paid&&x.name===DNK_NAME)}
+  if(!c){c={id:uid(),name:isDnk(p)?DNK_NAME:((p.client||"").trim()||item.name),amount:0,items:[],invoice:"need",receipt:"need",paid:false,paidAt:null,created:Date.now()};S.clients.push(c);created=true}
+  if(!c.items)c.items=[];
+  c.items=c.items.filter(it=>(it.name||"").trim()||num(it.price)); // убрать пустые строки
+  c.items.push(item);
+  p.billed={client:c.id,item:item.id,created,at:Date.now()};
+  openEst.add(c.id);
+  toast("Отправлено в оплату: "+c.name);
+}
+function unbillProject(p){
+  const b=p.billed;if(!b)return;
+  const c=S.clients.find(x=>x.id===b.client);
+  if(c&&!c.paid){
+    c.items=(c.items||[]).filter(it=>it.id!==b.item);
+    if(b.created&&!c.items.some(it=>(it.name||"").trim()||num(it.price)))S.clients=S.clients.filter(x=>x.id!==c.id);
+    toast("Убрано из оплаты: "+c.name);
+  }
+  if(!c||!c.paid)delete p.billed;
+}
+function setProjStatus(p,v){
+  const was=p.status;p.status=v;
+  if(v==="done"&&was!=="done")billProject(p);
+  else if(v!=="done"&&was==="done")unbillProject(p);
+  save();render();
+}
+function billFlag(p){
+  const b=p.billed;if(!b)return null;
+  const c=S.clients.find(x=>x.id===b.client);
+  const paid=c&&c.paid;
+  const a=btn("bflag"+(paid?" paid":""),paid?"✓ оплачено":"💸 ушёл в оплату",()=>{
+    if(!c)return;pFilter=c.paid?"paid":"unpaid";openEst.add(c.id);renderPay();
+    const el=document.querySelector('.pc[data-c="'+c.id+'"]');if(el){el.scrollIntoView({behavior:"smooth",block:"center"});el.classList.remove("flash");void el.offsetWidth;el.classList.add("flash")}
+  });
+  a.title=c?(paid?"Оплачено: ":"В оплате: ")+c.name:"Запись об оплате удалена";
+  return a;
+}
 /* ---------- оплата от клиентов ---------- */
 const INV=[["need","Выставить счёт"],["sent","Счёт выставлен"],["req","Выслать реквизиты"],["reqsent","Реквизиты отправлены"],["no","Счёт не нужен"]];
 const REC=[["need","Отправить чек"],["sent","Чек отправлен"],["no","Чек не нужен"]];
@@ -1047,7 +1095,7 @@ function renderPay(){
     .sort((a,b)=>a.paid!==b.paid?(a.paid?1:-1):(b.paidAt||b.created)-(a.paidAt||a.created));
   if(!items.length){list.append(mk("div","pempty",pFilter==="unpaid"?"Все клиенты рассчитались 🎉":"Пока пусто"));return}
   items.forEach(c=>{
-    const el=mk("article","pc"+(c.paid?" paid":""));
+    const el=mk("article","pc"+(c.paid?" paid":""));el.dataset.c=c.id;
     const smEl=mk("div","sm",money(amountOf(c)));if(hasEst(c))smEl.append(mk("small",null,"по смете"));
     el.append(mk("div","nm",c.name),smEl);
     el.append(estBlock(c,el));
