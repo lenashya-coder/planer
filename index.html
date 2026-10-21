@@ -664,6 +664,15 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
 </div>
 
 <script>
+/* автообновление: если на сайте новая версия — тихо перезагрузиться */
+const APP_V="202610220139";
+(function(){try{
+  if(sessionStorage.getItem("planner:upd")===APP_V)return;
+  fetch(location.pathname+"?nocache="+Date.now(),{cache:"no-store"}).then(r=>r.text()).then(t=>{
+    const m=t.match(/const APP_V="(\d+)"/);
+    if(m&&m[1]!==APP_V){sessionStorage.setItem("planner:upd",APP_V);location.replace(location.pathname+"?v="+m[1]+location.hash)}
+  }).catch(()=>{});
+}catch(e){}})();
 (function(){
 "use strict";
 const MON=["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
