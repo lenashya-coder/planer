@@ -517,6 +517,80 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
   h2{font-size:clamp(30px,8.4vw,40px)}
 }
 
+
+/* ================= страницы, вкладки, блокнот ================= */
+.tabs{display:flex;gap:6px;margin:0 0 22px;padding:6px;border-radius:999px;background:var(--glass);-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);box-shadow:var(--shadow),inset 0 0 0 1px var(--gb);width:max-content;max-width:100%;overflow-x:auto}
+.tabs button{border:0;background:transparent;border-radius:999px;padding:9px 18px;font:500 13px "Montserrat";color:var(--muted);white-space:nowrap;display:flex;align-items:center;gap:7px}
+.tabs button svg{width:17px;height:17px;flex:none}
+.tabs button[aria-selected="true"]{background:var(--gberry);color:#FFF4E6;box-shadow:0 6px 16px rgba(94,14,26,.22)}
+.page{display:none}.page.active{display:block;animation:pgin .25s ease}
+@keyframes pgin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.page.active{animation:none}}
+.cal,.prog{display:none!important}
+/* кольцо прогресса */
+.top{align-items:center}
+.ring{position:relative;width:64px;height:64px;flex:none;border:0;background:var(--glass);border-radius:50%;box-shadow:var(--shadow),inset 0 0 0 1px var(--gb);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);padding:0;cursor:pointer}
+.ring svg{position:absolute;inset:4px;width:56px;height:56px;transform:rotate(-90deg)}
+.ring .bgc{stroke:rgba(142,24,40,.12)} .ring .fgc{stroke:url(#rg);transition:stroke-dashoffset .5s ease}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font:300 15px "Montserrat";color:var(--berry);font-variant-numeric:lining-nums}
+.ring small{position:absolute;left:0;right:0;bottom:-16px;text-align:center;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.top .right{display:flex;align-items:center;gap:14px;margin-left:auto}
+/* блокнот недели */
+.nbbar{display:flex;align-items:center;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+.nbbar h1{margin:0;font-size:clamp(30px,7vw,46px)}
+.nbbar .weeknav{margin:0 0 0 auto}
+.nbtoday{border:0;border-radius:999px;padding:8px 16px;background:var(--gsky);color:var(--skyink);font:500 12.5px "Montserrat"}
+.nb{display:grid;grid-template-columns:repeat(5,minmax(0,1fr)) minmax(0,1fr);gap:0 22px;background:var(--glass);-webkit-backdrop-filter:blur(22px) saturate(1.2);backdrop-filter:blur(22px) saturate(1.2);border-radius:var(--r-xl);box-shadow:var(--shadow),inset 0 0 0 1px var(--gb);padding:22px 24px 26px}
+.nbwk{display:flex;flex-direction:column;gap:20px;min-width:0}
+.nbday{min-width:0;border-radius:12px}
+.nbday header{display:flex;align-items:baseline;gap:8px;padding:0 2px 9px;border-bottom:1.5px solid var(--ink);cursor:pointer}
+.nbday header b{font:400 24px "Montserrat";letter-spacing:-.02em;font-variant-numeric:lining-nums}
+.nbday header span{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.nbday header .bn{width:20px;height:22px;margin-left:auto;align-self:center}
+.nbday.today header{border-color:var(--berry)} .nbday.today header b,.nbday.today header span{color:var(--berry)}
+.nbday.today header b{font-weight:500}
+.nbday.past header b{color:#B7A69C}
+.ln{min-height:38px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:7px;font-size:13.5px;position:relative}
+.ln .c{flex:none;width:16px;height:16px;border-radius:50%;border:1.3px solid rgba(42,26,22,.25);background:transparent;padding:0;display:grid;place-items:center;cursor:pointer}
+.ln .c svg{opacity:0;width:10px;height:10px}
+.ln.done .c{background:#B7A69C;border-color:#B7A69C}.ln.done .c svg{opacity:1}
+.ln .t{flex:1;min-width:0;border:0;background:transparent;padding:6px 0;text-align:left;font:inherit;color:inherit;cursor:pointer;overflow:hidden;line-height:1.75;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow-wrap:anywhere}
+.ln .t span{padding:2px 7px;border-radius:7px;font-weight:500;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.ln.done .t{text-decoration:line-through;color:#B7A69C}.ln.done .t span{background:transparent!important;color:#B7A69C!important}
+.ln .tm{font-size:10.5px;color:var(--muted);flex:none;font-variant-numeric:lining-nums tabular-nums}
+.ln.empty{cursor:text}
+.ln.empty:hover{background:rgba(255,255,255,.35)}
+.ln input{flex:1;min-width:0;border:0;background:rgba(255,255,255,.85);border-radius:9px;padding:6px 8px;font:inherit;outline:none}
+.ln select{border:0;background:var(--gsky);border-radius:999px;padding:5px 6px;font:500 11px "Montserrat";color:var(--skyink);max-width:96px}
+.ln[data-drag]{cursor:grab}
+.nbday.drop-on{outline:2px dashed var(--berry);outline-offset:4px;background:rgba(142,24,40,.05)!important}
+.tg-design{background:#F3D3DA;color:#8E1828}.tg-life{background:#D9E6F4;color:#2E5A8C}.tg-home{background:#E1F0CF;color:#3E6B22}
+.tg-beauty{background:#FAEEC2;color:#7A6410}.tg-tg,.tg-ig,.tg-pin{background:#EEE7E2;color:#5B4A44}.tg-x{background:#EDE6F3;color:#5A3E75}
+/* когда-нибудь */
+.someday{margin-top:30px}
+.sdgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 22px;background:var(--glass);-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);border-radius:var(--r-xl);box-shadow:var(--shadow),inset 0 0 0 1px var(--gb);padding:22px 24px 24px}
+.sdcol header{display:flex;align-items:center;gap:8px;padding-bottom:9px;border-bottom:1.5px solid var(--ink);font-weight:500;font-size:14px}
+.sdcol header i{width:9px;height:9px;border-radius:50%}
+.ln .x{flex:none;border:0;background:transparent;color:var(--muted);font-size:16px;padding:0 2px;opacity:0}
+.ln:hover .x{opacity:.7}
+/* мобильная версия: вкладки снизу, кольцо снизу */
+@media (max-width:760px){
+  .tabs{position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:50;margin:0;width:auto;justify-content:space-between;padding:6px;background:rgba(255,252,246,.88)}
+  .tabs button{flex:1;flex-direction:column;gap:3px;padding:7px 4px;font-size:10.5px;justify-content:center}
+  .tabs button svg{width:20px;height:20px}
+  .wrap{padding-bottom:130px}
+  .top .right .ring{position:fixed;right:16px;bottom:calc(92px + env(safe-area-inset-bottom,0px));z-index:49;width:58px;height:58px;background:rgba(255,252,246,.92)}
+  .ring svg{inset:3px;width:52px;height:52px}
+  .ring small{display:none}
+  .nb{grid-template-columns:1fr;gap:18px;padding:18px 16px 20px}
+  .nbwk{gap:18px}
+  .sdgrid{grid-template-columns:1fr 1fr;gap:18px 16px;padding:18px 16px}
+  .ln{min-height:42px;font-size:14.5px}
+  .ln .c{width:20px;height:20px}
+  .ln .x{opacity:.5}
+  .nbbar .weeknav{margin-left:0}
+}
+
 </style>
 </head>
 <body>
@@ -525,14 +599,23 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
   <header class="top">
     <div class="hello" id="hello"></div>
     <div class="clocks"><div class="mclock"><span>Москва</span><b id="cMsk">--:--</b></div><div class="mclock pink"><span>Самара</span><b id="cSam">--:--</b></div><div class="clock"><div class="tz">Новосибирск<br>UTC+7</div><div class="time" id="clock">--:--</div></div></div>
+    <div class="right"><button class="ring" id="ring" type="button" aria-label="Прогресс сегодня"><svg viewBox="0 0 56 56" aria-hidden="true"><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9FBFE3"/><stop offset="1" stop-color="#8E1828"/></linearGradient></defs><circle class="bgc" cx="28" cy="28" r="24" fill="none" stroke-width="4"/><circle class="fgc" id="ringFg" cx="28" cy="28" r="24" fill="none" stroke-width="4" stroke-linecap="round" stroke-dasharray="150.8" stroke-dashoffset="150.8"/></svg><b id="ringPct">0%</b><small>сегодня</small></button></div>
   </header>
+<nav class="tabs" id="tabs" role="tablist" aria-label="Разделы"><button type="button" role="tab" data-p="week" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="4" y="3.5" width="16" height="17" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Неделя</span></button><button type="button" role="tab" data-p="day" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3.5" y="5" width="7.5" height="14" rx="2.5"/><rect x="13" y="5" width="7.5" height="9" rx="2.5"/></svg><span>День</span></button><button type="button" role="tab" data-p="projects" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4.5l5 5L9 20H4v-5z"/></svg><span>Проекты</span></button><button type="button" role="tab" data-p="pay" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3.5" y="6" width="17" height="12" rx="3"/><path d="M3.5 10h17M7 14.5h4"/></svg><span>Оплаты</span></button><button type="button" role="tab" data-p="ideas" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 17h6M10 20h4M12 3.5a5.5 5.5 0 0 0-3.2 10c.6.5 1.2 1.3 1.2 2.1V16h4v-.4c0-.8.6-1.6 1.2-2.1A5.5 5.5 0 0 0 12 3.5z"/></svg><span>Идеи</span></button></nav>
 
+  <div class="page" data-page="week">
+  <div class="nbbar"><h1 id="nbMonth">Неделя</h1><button class="nbtoday" id="nbToday" type="button">Сегодня</button>
   <div class="weeknav">
     <button class="navbtn" id="prevW" aria-label="Прошлая неделя">‹</button>
     <span id="wRange"></span>
     <button class="navbtn" id="nextW" aria-label="Следующая неделя">›</button>
   </div>
+  </div>
+  <div class="nb" id="nb"></div>
+  <section class="someday"><div class="sec-head"><div class="sec-title"><h2 data-over="без даты">Когда-<em>нибудь</em></h2></div></div><div class="sdgrid" id="sdgrid"></div></section>
   <div class="cal"><div class="cal-scroll" id="calScroll"><div class="cal-grid" id="cal"></div></div></div>
+  </div>
+  <div class="page" data-page="day">
 
   <div class="sec-head">
     <div class="sec-title"><h1 id="dayTitle">Сегодня</h1><span class="sub" id="daySub"></span></div>
@@ -546,11 +629,15 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
     <div class="prog-num"><b id="progPct">0%</b><span id="progTxt">задач пока нет</span></div>
   </section>
 
+  </div>
+  <div class="page" data-page="projects">
   <div class="sec-head"><div class="sec-title"><h2 data-over="в работе">Сводка <em>проектов</em></h2></div>
     <div class="stats"><button class="newcol" id="prAdd" type="button">+ Проект</button><span>В работе<b id="prCnt">0</b></span></div></div>
   <section class="sumt" id="sumT" aria-label="Сводка проектов"></section>
 
-  <div id="insights"></div>
+  </div>
+  <div class="page" data-page="ideas"><div id="insights"></div></div>
+  <div class="page" data-page="pay">
 
   <div class="sec-head"><div class="sec-title"><h2 data-over="деньги">Оплата <em>от клиентов</em></h2></div>
     <div class="stats"><span>Ждём<b id="payWait">0 ₽</b></span><span id="payGotL">Получено<b id="payGot">0 ₽</b></span></div></div>
@@ -565,6 +652,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
   </section>
   <div class="pfilter" id="pFilter" role="tablist"></div>
   <div class="plist" id="pList"></div>
+  </div>
 
   <p class="foot" id="foot">Сохраняется в этом браузере</p>
   <div class="foot" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
@@ -605,7 +693,7 @@ const ICONS={
 
 /* ---------- состояние ---------- */
 const DEFAULT_COLS=[{id:"beauty",name:"Beauty-процедуры",icon:"beauty"},{id:"home",name:"Дом",icon:"home"},{id:"other",name:"Дизайн",icon:"design"},{id:"life",name:"Личное",icon:"life"},{id:"tg",name:"Telegram",icon:"tg"},{id:"ig",name:"Instagram",icon:"ig"},{id:"pin",name:"Pinterest",icon:"pin"}];
-function blank(){return{v:2,cols:DEFAULT_COLS.map(c=>({...c})),tasks:[],posts:{tg:[],ig:[],igs:[],pin:[]},notes:[],drafts:{proj:"",post:""},clients:[],projects:[]}}
+function blank(){return{v:2,cols:DEFAULT_COLS.map(c=>({...c})),tasks:[],posts:{tg:[],ig:[],igs:[],pin:[]},notes:[],drafts:{proj:"",post:""},clients:[],projects:[],someday:[]}}
 function norm(s){
   const b=blank(); if(!s||typeof s!=="object")return b;
   if(Array.isArray(s.cols)&&s.cols.length)b.cols=s.cols;
@@ -617,6 +705,7 @@ function norm(s){
   else if(typeof s.draft==="string")b.drafts.post=s.draft;
   if(Array.isArray(s.clients))b.clients=s.clients;
   if(Array.isArray(s.projects))b.projects=s.projects.filter(p=>p&&p.id);
+  if(Array.isArray(s.someday))b.someday=s.someday.filter(x=>x&&x.id).map(x=>({id:x.id,col:x.col,text:String(x.text||"")}));
   b.m3=!!s.m3;
   if(!b.m3){ // колонки «Дизайн» (бывшее «Другое») и «Личное» сразу после задач на сегодня
     const o=b.cols.find(x=>x.id==="other")||{id:"other",name:"Дизайн",icon:"design"};
@@ -788,7 +877,7 @@ function setDate(kind,val){ // ручная дата: всё, что позже,
 function afterLoad(){if(S.__mig){delete S.__mig;save()}}
 
 /* ---------- отрисовка ---------- */
-function render(){try{renderHead();renderCal();renderCols();renderProg();renderSummary();renderNotes();renderPay()}catch(e){console.error(e)}}
+function render(){try{renderHead();renderCal();renderNotebook();renderRing();renderCols();renderProg();renderSummary();renderNotes();renderPay()}catch(e){console.error(e)}}
 
 function renderHead(){
   const t=today(),k=key(sel),diff=Math.round((sel-t)/864e5);
@@ -811,6 +900,11 @@ function toast(msg,undo){
   document.body.append(el);toastT=setTimeout(()=>el.remove(),5000);
 }
 function moveTask(t,toDate,hour){
+  if(t.someday){ // из «Когда-нибудь» — в день
+    S.someday=S.someday.filter(x=>x.id!==t.id);
+    S.tasks.push({id:uid(),col:t.col,text:t.text,date:toDate,time:hour!=null?pad(hour)+":00":"",done:false,repeat:false,doneOn:{},subs:[]});
+    save();render();toast("Запланировано на "+fmtDay(toDate));return;
+  }
   const prev={date:t.date,time:t.time};
   if(t.repeat){toast("Ежедневные задачи не переносятся");return}
   let time=t.time;
@@ -1088,6 +1182,7 @@ function contactHref(v){
 }
 function renderOthers(){try{renderHead();renderCal();renderCols();renderProg()}catch(e){console.error(e)}}
 function openInSummary(p){
+  showPage("projects");
   const r=document.querySelector('.srow[data-p="'+p.id+'"]');if(!r)return;
   r.scrollIntoView({behavior:"smooth",block:"center"});r.classList.remove("flash");void r.offsetWidth;r.classList.add("flash");
 }
@@ -1178,11 +1273,104 @@ function billFlag(p){
   const c=S.clients.find(x=>x.id===b.client);
   const paid=c&&c.paid;
   const a=btn("bflag"+(paid?" paid":""),paid?"✓ оплачено":"💸 ушёл в оплату",()=>{
-    if(!c)return;pFilter=c.paid?"paid":"unpaid";openEst.add(c.id);renderPay();
+    if(!c)return;showPage("pay");pFilter=c.paid?"paid":"unpaid";openEst.add(c.id);renderPay();
     const el=document.querySelector('.pc[data-c="'+c.id+'"]');if(el){el.scrollIntoView({behavior:"smooth",block:"center"});el.classList.remove("flash");void el.offsetWidth;el.classList.add("flash")}
   });
   a.title=c?(paid?"Оплачено: ":"В оплате: ")+c.name:"Запись об оплате удалена";
   return a;
+}
+/* ---------- страницы ---------- */
+const PAGES=["week","day","projects","pay","ideas"];
+function showPage(p,noScroll){
+  if(!PAGES.includes(p))p="week";
+  document.querySelectorAll(".page").forEach(x=>x.classList.toggle("active",x.dataset.page===p));
+  document.querySelectorAll("#tabs button").forEach(b=>b.setAttribute("aria-selected",b.dataset.p===p?"true":"false"));
+  try{localStorage.setItem("planner:tab",p)}catch(e){}
+  if(!noScroll)window.scrollTo({top:0,behavior:"instant"in window?"instant":"auto"});
+}
+document.querySelectorAll("#tabs button").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.p)));
+
+/* ---------- кольцо прогресса (сегодня) ---------- */
+function renderRing(){
+  const k=key(today()),ts=dayTasks(k),dn=ts.filter(t=>isDone(t,k)).length,pct=ts.length?Math.round(dn/ts.length*100):0;
+  const C=2*Math.PI*24;$("ringFg").setAttribute("stroke-dashoffset",String(C*(1-pct/100)));
+  $("ringPct").textContent=pct+"%";
+  $("ring").title=ts.length?"Сегодня сделано "+dn+" из "+ts.length:"На сегодня задач нет";
+}
+$("ring").addEventListener("click",()=>{sel=today();showPage("day");render()});
+
+/* ---------- блокнот недели (как Tweek) ---------- */
+const colClass=id=>({other:"design",life:"life",home:"home",beauty:"beauty",tg:"tg",ig:"ig",pin:"pin"})[id]||"x";
+let nbAdding=null;
+function nbLine(t,k){
+  const done=isDone(t,k),ln=mk("div","ln"+(done?" done":""));
+  const c=btn("c","",()=>{const v=!isDone(t,k);setDone(t,k,v);t.subs.forEach(s=>setSub(t,s,k,v));save();render()},done?"Снять отметку":"Выполнено");
+  c.innerHTML='<svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5l3 3 6-7" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const tx=btn("t","",()=>{sel=fromKey(k);openT.add(t.id);showPage("day");render();
+    setTimeout(()=>{const el=[...document.querySelectorAll("#cols .ttext")].find(x=>x.textContent===t.text);if(el)el.scrollIntoView({behavior:"smooth",block:"center"})},60)});
+  const sp=mk("span","tg-"+colClass(t.col),t.text);tx.append(sp);tx.title=t.text+" — открыть";
+  ln.append(c,tx);if(t.time)ln.append(mk("span","tm",t.time));
+  makeDraggable(ln,t,t.text);
+  return ln;
+}
+function nbAddLine(k){
+  const ln=mk("div","ln");
+  const inp=mk("input");inp.placeholder="Новая задача";inp.maxLength=200;inp.setAttribute("enterkeyhint","done");
+  const cs=mk("select");S.cols.filter(c=>!["tg","ig","pin"].includes(c.id)).concat(S.cols.filter(c=>["tg","ig","pin"].includes(c.id))).forEach(c=>{const o=mk("option",null,c.name);o.value=c.id;cs.append(o)});
+  let last="life";try{last=localStorage.getItem("planner:lastcol")||"life"}catch(e){}
+  cs.value=S.cols.some(c=>c.id===last)?last:"life";cs.setAttribute("aria-label","Раздел");
+  const go=()=>{const v=inp.value.trim();if(v){S.tasks.push({id:uid(),col:cs.value,text:v,date:k,time:"",done:false,repeat:false,doneOn:{},subs:[]});
+      try{localStorage.setItem("planner:lastcol",cs.value)}catch(e){}save()}
+    nbAdding=v?k:null;render();if(v)setTimeout(()=>{const i=document.querySelector('.nbday[data-drop="'+k+'"] .ln input');if(i)i.focus()},0)};
+  inp.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();go()}if(e.key==="Escape"){nbAdding=null;render()}});
+  inp.addEventListener("blur",()=>setTimeout(()=>{if(document.activeElement!==cs&&document.activeElement!==inp){if(inp.value.trim())go();else if(nbAdding===k){nbAdding=null;render()}}},150));
+  ln.append(inp,cs);return ln;
+}
+function nbDay(d,minLines){
+  const k=key(d),tk=key(today()),box=mk("section","nbday"+(k===tk?" today":k<tk?" past":""));box.dataset.drop=k;
+  const h=mk("header");h.append(mk("b",null,String(d.getDate())),mk("span",null,WDS[d.getDay()]));
+  const ts=dayTasks(k),bl=loadLevel(ts.length);const bw=mk("span");bw.innerHTML=bunnySVG(bl).replace('<svg ','<svg class="bn" ');h.append(bw.firstChild);
+  h.title="Открыть день";h.addEventListener("click",()=>{sel=d;showPage("day");render()});
+  box.append(h);
+  ts.slice().sort(byTime).forEach(t=>box.append(nbLine(t,k)));
+  if(nbAdding===k)box.append(nbAddLine(k));
+  const free=Math.max(1,minLines-ts.length-(nbAdding===k?1:0));
+  for(let i=0;i<free;i++){const e=mk("div","ln empty");e.title="Добавить задачу";e.addEventListener("click",()=>{nbAdding=k;render();const inp=document.querySelector('.nbday[data-drop="'+k+'"] .ln input');if(inp)inp.focus()});box.append(e)}
+  return box;
+}
+function renderNotebook(){
+  const nb=$("nb");if(!nb)return;nb.textContent="";
+  const mob=window.innerWidth<=760;
+  for(let i=0;i<5;i++)nb.append(nbDay(addDays(weekStart,i),mob?2:10));
+  const wk=mk("div","nbwk");wk.append(nbDay(addDays(weekStart,5),mob?2:4),nbDay(addDays(weekStart,6),mob?2:4));nb.append(wk);
+  const ws=weekStart,we=addDays(ws,6);
+  $("nbMonth").innerHTML="";$("nbMonth").append(MONTHS_NOM[ws.getMonth()]+(we.getMonth()!==ws.getMonth()?" — "+MONTHS_NOM[we.getMonth()].toLowerCase():"")+" ");
+  $("nbMonth").append(mk("em",null,String(we.getFullYear())));
+  renderSomeday();
+}
+const MONTHS_NOM=["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"];
+$("nbToday").addEventListener("click",()=>{sel=today();weekStart=monday(sel);render()});
+let nbW=window.innerWidth;window.addEventListener("resize",()=>{if((nbW<=760)!==(window.innerWidth<=760)){nbW=window.innerWidth;renderNotebook()}});
+
+/* ---------- когда-нибудь ---------- */
+let sdAdding=null;
+function renderSomeday(){
+  const g=$("sdgrid");if(!g)return;g.textContent="";
+  const cols=S.cols.filter(c=>!["tg","ig","pin"].includes(c.id));
+  cols.forEach(c=>{
+    const col=mk("div","sdcol");const h=mk("header");const dot=mk("i");dot.className="tg-"+colClass(c.id);h.append(dot,c.name);col.append(h);
+    S.someday.filter(x=>x.col===c.id).forEach(it=>{
+      const ln=mk("div","ln");const sp=mk("span","tg-"+colClass(c.id),it.text);const tx=mk("span","t");tx.append(sp);
+      ln.append(tx,btn("x","×",()=>{S.someday=S.someday.filter(x=>x.id!==it.id);save();render()},"Удалить"));
+      makeDraggable(ln,Object.assign(it,{someday:true}),it.text);col.append(ln)});
+    if(sdAdding===c.id){const ln=mk("div","ln");const inp=mk("input");inp.placeholder="Когда-нибудь…";inp.maxLength=200;
+      const go=()=>{const v=inp.value.trim();if(v){S.someday.push({id:uid(),col:c.id,text:v});save()}sdAdding=v?c.id:null;render();if(v)setTimeout(()=>{const i=document.querySelector('.sdcol[data-c="'+c.id+'"] input');if(i)i.focus()},0)};
+      inp.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();go()}if(e.key==="Escape"){sdAdding=null;render()}});
+      inp.addEventListener("blur",()=>setTimeout(()=>{if(inp.value.trim())go();else if(sdAdding===c.id){sdAdding=null;render()}},150));
+      ln.append(inp);col.append(ln)}
+    const e=mk("div","ln empty");e.title="Добавить";e.addEventListener("click",()=>{sdAdding=c.id;render();const i=document.querySelector('.sdcol[data-c="'+c.id+'"] input');if(i)i.focus()});col.append(e);
+    col.dataset.c=c.id;g.append(col);
+  });
 }
 /* ---------- оплата от клиентов ---------- */
 const INV=[["need","Выставить счёт"],["sent","Счёт выставлен"],["req","Выслать реквизиты"],["reqsent","Реквизиты отправлены"],["no","Счёт не нужен"]];
@@ -1375,6 +1563,7 @@ $("copyLink").addEventListener("click",e=>{if(!vaultKey){askKey();window.scrollT
 $("exp").addEventListener("click",()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:"application/json"}));a.download="planer-"+key(today())+".json";document.body.append(a);a.click();a.remove()});
 $("imp").addEventListener("click",()=>$("impFile").click());
 $("impFile").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const v=JSON.parse(r.result);if(!v||!Array.isArray(v.tasks))throw 0;if(confirm("Заменить текущие задачи данными из копии?")){S=norm(v);save();render()}}catch(x){alert("Этот файл не похож на копию планера.")}e.target.value=""};r.readAsText(f)});
+{let p="week";try{p=localStorage.getItem("planner:tab")||"week"}catch(e){}showPage(p,true)}
 afterLoad();render();scrollCalToNow();tick();setInterval(tick,10000);
 
 /* ---------- запуск синхронизации ---------- */
