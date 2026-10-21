@@ -554,7 +554,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
 .ln .c{flex:none;width:16px;height:16px;border-radius:50%;border:1.3px solid rgba(42,26,22,.25);background:transparent;padding:0;display:grid;place-items:center;cursor:pointer}
 .ln .c svg{opacity:0;width:10px;height:10px}
 .ln.done .c{background:#B7A69C;border-color:#B7A69C}.ln.done .c svg{opacity:1}
-.ln .t{flex:1;min-width:0;border:0;background:transparent;padding:6px 0;text-align:left;font:inherit;color:inherit;cursor:pointer;overflow:hidden;line-height:1.75;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow-wrap:anywhere}
+.ln .t{display:block;flex:1 1 0%;width:0;min-width:0;border:0;background:transparent;padding:6px 0;margin:0;text-align:left;font:inherit;color:inherit;cursor:pointer;line-height:1.75;white-space:normal;word-break:normal;overflow-wrap:break-word;-webkit-appearance:none;appearance:none}
 .ln .t span{padding:2px 7px;border-radius:7px;font-weight:500;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .ln.done .t{text-decoration:line-through;color:#B7A69C}.ln.done .t span{background:transparent!important;color:#B7A69C!important}
 .ln .tm{font-size:10.5px;color:var(--muted);flex:none;font-variant-numeric:lining-nums tabular-nums}
@@ -573,6 +573,12 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
 .sdcol header i{width:9px;height:9px;border-radius:50%}
 .ln .x{flex:none;border:0;background:transparent;color:var(--muted);font-size:16px;padding:0 2px;opacity:0}
 .ln:hover .x{opacity:.7}
+/* планшет: неделя в 3 колонки */
+@media (min-width:761px) and (max-width:1180px){
+  .nb{grid-template-columns:repeat(3,minmax(0,1fr));gap:26px 22px}
+  .sdgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+  .top{flex-wrap:wrap}
+}
 /* мобильная версия: вкладки снизу, кольцо снизу */
 @media (max-width:760px){
   .tabs{position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:50;margin:0;width:auto;justify-content:space-between;padding:6px;background:rgba(255,252,246,.88)}
@@ -665,7 +671,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
 
 <script>
 /* автообновление: если на сайте новая версия — тихо перезагрузиться */
-const APP_V="202610220139";
+const APP_V="202610220141";
 (function(){try{
   if(sessionStorage.getItem("planner:upd")===APP_V)return;
   fetch(location.pathname+"?nocache="+Date.now(),{cache:"no-store"}).then(r=>r.text()).then(t=>{
@@ -1315,8 +1321,9 @@ function nbLine(t,k){
   const done=isDone(t,k),ln=mk("div","ln"+(done?" done":""));
   const c=btn("c","",()=>{const v=!isDone(t,k);setDone(t,k,v);t.subs.forEach(s=>setSub(t,s,k,v));save();render()},done?"Снять отметку":"Выполнено");
   c.innerHTML='<svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5l3 3 6-7" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  const tx=btn("t","",()=>{sel=fromKey(k);openT.add(t.id);showPage("day");render();
-    setTimeout(()=>{const el=[...document.querySelectorAll("#cols .ttext")].find(x=>x.textContent===t.text);if(el)el.scrollIntoView({behavior:"smooth",block:"center"})},60)});
+  const open=()=>{sel=fromKey(k);openT.add(t.id);showPage("day");render();
+    setTimeout(()=>{const el=[...document.querySelectorAll("#cols .ttext")].find(x=>x.textContent===t.text);if(el)el.scrollIntoView({behavior:"smooth",block:"center"})},60)};
+  const tx=mk("div","t");tx.setAttribute("role","button");tx.tabIndex=0;tx.addEventListener("click",open);tx.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();open()}});
   const sp=mk("span","tg-"+colClass(t.col),t.text);tx.append(sp);tx.title=t.text+" — открыть";
   ln.append(c,tx);if(t.time)ln.append(mk("span","tm",t.time));
   makeDraggable(ln,t,t.text);
@@ -1349,9 +1356,9 @@ function nbDay(d,minLines){
 }
 function renderNotebook(){
   const nb=$("nb");if(!nb)return;nb.textContent="";
-  const mob=window.innerWidth<=760;
-  for(let i=0;i<5;i++)nb.append(nbDay(addDays(weekStart,i),mob?2:10));
-  const wk=mk("div","nbwk");wk.append(nbDay(addDays(weekStart,5),mob?2:4),nbDay(addDays(weekStart,6),mob?2:4));nb.append(wk);
+  const w=window.innerWidth,mob=w<=760,tab=w>760&&w<=1180;
+  for(let i=0;i<5;i++)nb.append(nbDay(addDays(weekStart,i),mob?2:tab?6:10));
+  const wk=mk("div","nbwk");wk.append(nbDay(addDays(weekStart,5),mob?2:tab?3:4),nbDay(addDays(weekStart,6),mob?2:tab?2:4));nb.append(wk);
   const ws=weekStart,we=addDays(ws,6);
   $("nbMonth").innerHTML="";$("nbMonth").append(MONTHS_NOM[ws.getMonth()]+(we.getMonth()!==ws.getMonth()?" — "+MONTHS_NOM[we.getMonth()].toLowerCase():"")+" ");
   $("nbMonth").append(mk("em",null,String(we.getFullYear())));
@@ -1359,7 +1366,7 @@ function renderNotebook(){
 }
 const MONTHS_NOM=["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"];
 $("nbToday").addEventListener("click",()=>{sel=today();weekStart=monday(sel);render()});
-let nbW=window.innerWidth;window.addEventListener("resize",()=>{if((nbW<=760)!==(window.innerWidth<=760)){nbW=window.innerWidth;renderNotebook()}});
+const nbMode=w=>w<=760?0:w<=1180?1:2;let nbW=nbMode(window.innerWidth);window.addEventListener("resize",()=>{const m=nbMode(window.innerWidth);if(m!==nbW){nbW=m;renderNotebook()}});
 
 /* ---------- когда-нибудь ---------- */
 let sdAdding=null;
