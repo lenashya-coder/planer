@@ -12,7 +12,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,200;0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#000000; --ink:#F5F5F3; --muted:#8A8A8E; --faint:#3A3A3E;
@@ -622,6 +622,37 @@ body.is-dragging .dtl-ev .ev{pointer-events:none}
 .tdash{color:var(--muted);font-size:12px}
 @media (max-width:600px){.dtl-sc{max-height:260px}.dtl-h{height:32px}}
 
+
+/* ===== неделя по часам на странице «День» ===== */
+.wtl-sc{max-height:330px;overflow:auto;position:relative;-webkit-overflow-scrolling:touch;scrollbar-width:thin;border-radius:14px}
+.wtl{display:grid;grid-template-columns:44px repeat(7,minmax(0,1fr));position:relative;min-width:100%}
+.wtl-hd{position:sticky;top:0;z-index:4;background:rgba(253,249,244,.96);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);padding:4px 4px 6px;text-align:center;cursor:pointer;border-bottom:1px solid var(--line)}
+.wtl-hd.corner{left:0;z-index:5;cursor:default}
+.wtl-hd small{display:block;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.wtl-hd b{display:inline-grid;place-items:center;min-width:26px;height:26px;border-radius:50%;font-weight:500;font-size:15px;font-variant-numeric:lining-nums;margin-top:2px}
+.wtl-hd.today b{background:#D2362F;color:#fff}
+.wtl-hd.sel:not(.today) b{background:var(--ink);color:#fff}
+.wtl-ad{grid-column:span 1;padding:3px 2px;display:flex;flex-direction:column;gap:2px;border-bottom:1px solid var(--line);min-height:6px}
+.wtl-ad.corner{position:sticky;left:0;background:#FDF9F4;z-index:3;font-size:9px;color:var(--muted);text-align:right;padding-right:6px;justify-content:center}
+.wtl-ad .ev{position:static;min-height:0;padding:1px 5px;font-size:10px;white-space:nowrap;text-overflow:ellipsis;border-radius:5px}
+.wtl-hr{position:sticky;left:0;z-index:2;background:#FDF9F4;font-size:9.5px;color:var(--muted);text-align:right;padding-right:6px;font-variant-numeric:lining-nums tabular-nums}
+.wtl-hr span{position:relative;top:-6px}
+.wtl-col{position:relative;border-left:1px solid var(--line)}
+.wtl-col.today{background:rgba(210,54,47,.035)}
+.wtl-col.sel:not(.today){background:rgba(42,26,22,.025)}
+.wtl-cell{border-top:1px solid var(--line)}
+.wtl-cell.drop-on{background:rgba(142,24,40,.08)!important;outline:0!important}
+.wtl-ev{position:absolute;inset:0;pointer-events:none}
+.wtl-ev .ev{pointer-events:auto;font-size:10px;padding:1px 4px 1px 6px;border-left-width:2.5px}
+.wtl-ev .ev b{display:block;font-weight:600;margin:0}
+body.is-dragging .wtl-ev .ev{pointer-events:none}
+.wtl .dtl-now{left:0;right:0}
+@media (max-width:760px){.wtl{min-width:640px}.wtl-sc{max-height:300px}}
+
+/* ===== шрифт SF Pro везде ===== */
+html body,html body *,html body *::before,html body *::after{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","SF Pro","Inter",system-ui,"Segoe UI",sans-serif!important}
+h1 em,h2 em{font-style:italic;font-weight:400}
+
 </style>
 </head>
 <body>
@@ -697,7 +728,7 @@ body.is-dragging .dtl-ev .ev{pointer-events:none}
 
 <script>
 /* автообновление: если на сайте новая версия — тихо перезагрузиться */
-const APP_V="202610220153";
+const APP_V="202610220156";
 (function(){try{
   if(sessionStorage.getItem("planner:upd")===APP_V)return;
   fetch(location.pathname+"?nocache="+Date.now(),{cache:"no-store"}).then(r=>r.text()).then(t=>{
@@ -1429,6 +1460,50 @@ const tfmt=m=>pad(Math.floor(m/60)%24)+":"+pad(m%60);
 function tEnd(t){const s=tmin(t.time);if(s==null)return null;const e=tmin(t.end);return e!=null&&e>s?e:s+60}
 let tlScrolled=null;
 function renderDayTL(){
+  const box=$("dtl");if(!box)return;box.textContent="";
+  const H=TL_H(),tk=key(today()),sk=key(sel);
+  const days=[...Array(7)].map((_,i)=>addDays(weekStart,i));
+  const top=mk("div","dtl-top");top.append(mk("span","lbl","Неделя по часам · "+days[0].getDate()+"–"+days[6].getDate()+" "+MON[days[6].getMonth()]));box.append(top);
+  const per=days.map(d=>{const k=key(d),ts=dayTasks(k);return{d,k,timed:ts.filter(t=>t.time).sort(byTime),allday:ts.filter(t=>!t.time)}});
+  let h0=7,h1=23;per.forEach(p=>p.timed.forEach(t=>{h0=Math.min(h0,Math.floor(tmin(t.time)/60));h1=Math.max(h1,Math.ceil(tEnd(t)/60))}));h1=Math.min(h1,24);
+  const sc=mk("div","wtl-sc"),g=mk("div","wtl");
+  // шапка
+  g.append(mk("div","wtl-hd corner"));
+  per.forEach(({d,k})=>{const h=mk("div","wtl-hd"+(k===tk?" today":"")+(k===sk?" sel":""));h.append(mk("small",null,WDS[d.getDay()]),mk("b",null,String(d.getDate())));
+    h.title="Открыть день";h.addEventListener("click",()=>{sel=d;render()});g.append(h)});
+  // задачи без времени
+  if(per.some(p=>p.allday.length)){
+    const c=mk("div","wtl-ad corner","весь день");g.append(c);
+    per.forEach(({k,allday})=>{const a=mk("div","wtl-ad");allday.forEach(t=>{const e=mk("div","ev tg-"+colClass(t.col)+(isDone(t,k)?" done":""),t.text);e.title=t.text+" — без времени, перетащи на час";
+      e.addEventListener("click",()=>{sel=fromKey(k);openTask(t)});makeDraggable(e,t,t.text);a.append(e)});g.append(a)});
+  }
+  // часы + колонки
+  const hrs=mk("div","wtl-hr");for(let h=h0;h<h1;h++){const r=mk("div");r.style.height=H+"px";r.append(mk("span",null,pad(h)+":00"));hrs.append(r)}g.append(hrs);
+  per.forEach(({d,k,timed})=>{
+    const col=mk("div","wtl-col"+(k===tk?" today":"")+(k===sk?" sel":""));
+    for(let h=h0;h<h1;h++){const c=mk("div","wtl-cell");c.style.height=H+"px";c.dataset.drop=k;c.dataset.hour=h;col.append(c)}
+    const evl=mk("div","wtl-ev");
+    const lanes=[],items=timed.map(t=>({t,s:tmin(t.time),e:tEnd(t)}));
+    items.forEach(it=>{let i=lanes.findIndex(end=>end<=it.s);if(i<0){i=lanes.length;lanes.push(0)}lanes[i]=it.e;it.lane=i});
+    items.forEach(it=>{const over=items.filter(o=>o.s<it.e&&o.e>it.s);it.n=Math.max(...over.map(o=>o.lane))+1});
+    items.forEach(({t,s,e,lane,n})=>{const ev=mk("div","ev tg-"+colClass(t.col)+(isDone(t,k)?" done":""));
+      ev.style.top=((s-h0*60)/60*H+1)+"px";ev.style.height=Math.max(16,(e-s)/60*H-2)+"px";
+      ev.style.left="calc("+(lane/n*100)+"% + 2px)";ev.style.width="calc("+(100/n)+"% - 4px)";
+      ev.append(mk("b",null,t.time+(e-s>=45?"–"+tfmt(e):"")),t.text);ev.title=t.time+"–"+tfmt(e)+" · "+t.text;
+      ev.addEventListener("click",()=>{sel=fromKey(k);openTask(t)});makeDraggable(ev,t,t.text);evl.append(ev)});
+    col.append(evl);
+    if(k===tk){const n=new Date(),m=n.getHours()*60+n.getMinutes();if(m>=h0*60&&m<=h1*60){const nl=mk("div","dtl-now");nl.style.top=((m-h0*60)/60*H)+"px";col.append(nl)}}
+    g.append(col);
+  });
+  sc.append(g);box.append(sc);
+  const wkKey=key(weekStart);
+  if(tlScrolled!==wkKey){tlScrolled=wkKey;requestAnimationFrame(()=>{
+    const firsts=per.flatMap(p=>p.timed.map(t=>tmin(t.time)));const base=per.some(p=>p.k===tk)?new Date().getHours()-1:(firsts.length?Math.floor(Math.min(...firsts)/60)-1:8);
+    const adH=g.querySelector(".wtl-ad.corner")?g.querySelector(".wtl-ad.corner").offsetHeight:0;
+    sc.scrollTop=Math.max(0,(base-h0)*H);
+    const ci=days.findIndex(d=>key(d)===sk);if(window.innerWidth<=760&&ci>1)sc.scrollLeft=Math.max(0,(ci-1)*((g.offsetWidth-44)/7))})}
+}
+function renderDayTL_old(){
   const box=$("dtl");if(!box)return;box.textContent="";
   const k=key(sel),ts=dayTasks(k),timed=ts.filter(t=>t.time).sort(byTime),allday=ts.filter(t=>!t.time);
   const top=mk("div","dtl-top");top.append(mk("span","lbl","Расписание · "+(k===key(today())?"сегодня":sel.getDate()+" "+MON[sel.getMonth()])));box.append(top);
