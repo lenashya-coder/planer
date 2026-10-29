@@ -784,6 +784,47 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
 }
 
 .tabs button[aria-selected="true"],.pfilter button[aria-selected="true"]{background:#D6E5F7!important;color:#24508C!important;font-weight:600!important}
+/* ===== нежно-голубой + нежно-розовый ===== */
+:root{--pink-bg:#FCE8EF;--pink-bg2:#FEF3F7;--pink-ink:#B0507A;--pink-acc:#EAA3BF;--blue-bg:#E3EDF9;--blue-bg2:#F1F6FC;--blue-ink:#2F5D99;--blue-acc:#8DB0DE}
+#rg stop:first-child{stop-color:#9DBCE3!important}#rg stop:last-child{stop-color:#EAA3BF!important}
+.ring .fgc{stroke:url(#rg)!important}
+/* сегодня — розовым */
+.nbday.today header,.nbday.today header b,.nbday.today header span{color:var(--pink-ink)!important;border-bottom-color:var(--pink-acc)!important}
+.wtl-hd.today b{background:var(--pink-acc)!important;color:#fff!important}
+.wtl-col.today{background:#FFF8FB!important}
+.dtl-now{border-top-color:var(--pink-acc)!important}.dtl-now::before{background:var(--pink-acc)!important}
+.cal-head.today .dn,.cal-head.today .wd{color:var(--pink-ink)!important}
+/* разделы: дизайн и beauty — розовые, личное и дом — голубые */
+.tg-design,.ev.tg-design,.chipc.design{background:var(--pink-bg)!important;color:var(--pink-ink)!important}
+.tg-beauty,.ev.tg-beauty,.chipc.beauty{background:var(--pink-bg2)!important;color:#A0587A!important}
+.tg-life,.ev.tg-life,.chipc.life{background:var(--blue-bg)!important;color:var(--blue-ink)!important}
+.tg-home,.ev.tg-home,.chipc.home{background:var(--blue-bg2)!important;color:#3D6AA3!important}
+.ev.tg-design,.ev.tg-beauty{border-left-color:var(--pink-acc)!important}
+.ev.tg-life,.ev.tg-home{border-left-color:var(--blue-acc)!important}
+.sdcol header i.tg-design,.sdcol header i.tg-beauty{background:var(--pink-acc)!important}
+.sdcol header i.tg-life,.sdcol header i.tg-home{background:var(--blue-acc)!important}
+.card.design{background:linear-gradient(180deg,#fff 0%,#FFF5F9 100%)!important;border-color:#F6DCE6!important}
+.card.beauty{background:linear-gradient(180deg,#fff 0%,#FFF9FB 100%)!important;border-color:#F8E6EE!important}
+.card.life{background:linear-gradient(180deg,#fff 0%,#F4F8FD 100%)!important;border-color:#DCE7F5!important}
+.card.home{background:linear-gradient(180deg,#fff 0%,#F8FBFE 100%)!important;border-color:#E3ECF7!important}
+.card.design .card-h,.card.design .card-h .icon,.card.beauty .card-h .icon{color:var(--pink-ink)!important}
+.card.life .card-h .icon,.card.home .card-h .icon{color:var(--blue-ink)!important}
+.card.design .task.done .ck,.card.beauty .task.done .ck{background:var(--pink-acc)!important;border-color:var(--pink-acc)!important}
+.card.design .ck,.card.beauty .ck{border-color:#EBC0D1!important}
+/* розовые акценты точечно */
+.bflag{background:var(--pink-bg)!important;color:var(--pink-ink)!important}
+.pc::before{background:var(--pink-acc)!important}.pc.paid::before{background:var(--blue-acc)!important}
+.trow .dot.bad{background:var(--pink-acc)!important}
+.track.stale{border-color:#F3C9D9!important;background:#FFF8FB!important}
+.bunny.l2,.bunny.l3{background:var(--pink-bg2)!important}.bunny.l4{background:var(--pink-bg)!important;color:var(--pink-ink)!important}
+.bunny.l1{background:var(--blue-bg2)!important}
+.bn ellipse[fill="#F7A8C8"],.bn ellipse[fill="#F2A7BE"],.bunny svg ellipse[fill="#F7A8C8"]{fill:#F5C6D7!important}
+.bn circle[fill="#F7A8C8"],.bunny svg circle[fill="#F7A8C8"]{fill:#F8D3E1!important}
+.pst.rev,.pst.fix{background:var(--pink-bg)!important;color:var(--pink-ink)!important}
+.pst.dev,.pst.start{background:var(--blue-bg2)!important;color:var(--blue-ink)!important}
+.pst.done{background:var(--blue-bg)!important;color:var(--blue-ink)!important}
+.est-add{background:var(--pink-bg2)!important;color:var(--pink-ink)!important}
+
 </style>
 </head>
 <body>
@@ -859,7 +900,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
 
 <script>
 /* автообновление: если на сайте новая версия — тихо перезагрузиться */
-const APP_V="202610291445";
+const APP_V="202610291447";
 (function(){try{
   if(sessionStorage.getItem("planner:upd")===APP_V)return;
   fetch(location.pathname+"?nocache="+Date.now(),{cache:"no-store"}).then(r=>r.text()).then(t=>{
