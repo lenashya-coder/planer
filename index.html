@@ -8,7 +8,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Планер">
-<meta name="theme-color" content="#FBF5EE">
+<meta name="theme-color" content="#ffffff">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -653,6 +653,137 @@ body.is-dragging .wtl-ev .ev{pointer-events:none}
 html body,html body *,html body *::before,html body *::after{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","SF Pro","Inter",system-ui,"Segoe UI",sans-serif!important}
 h1 em,h2 em{font-style:italic;font-weight:400}
 
+/* ================= Белый + чуть голубого: лаконично и просто ================= */
+:root,:root:not([data-theme="light"]),:root[data-theme="dark"],:root[data-theme="light"]{
+  --bg:#fff;--ink:#2A3340;--muted:#8a8a8a;--faint:#e9e9e9;--line:#ececec;
+  --card:#fff;--card-ink:#2A3340;--card-muted:#8a8a8a;--card-line:#ececec;
+  --glass:#fff;--gb:#ececec;--berry:#5B8FD0;--cherry:#5B8FD0;--pink:#5B8FD0;--blue:#7FA6DA;--skyink:#2F5D99;--skyd:#2F5D99;
+  --gberry:#E3EDF9;--gsky:#F1F6FC;--pill:#E3EDF9;--pill-ink:#fff;--chip:#f2f2f2;
+  --ok:#5B8FD0;--warn:#777;--bad:#2A3340;--shadow:none;
+  --r-xl:16px;--r-lg:14px;--r-md:12px;--r-sm:10px;color-scheme:light}
+html,body{background:#fff!important}
+body::before{display:none!important}
+body{font-size:14.5px;letter-spacing:0;color:#2A3340}
+.wrap{max-width:1180px}
+
+/* убрать стекло, тени, градиенты */
+html body *{box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;text-shadow:none!important}
+.cal,.prog,.ins,.note,.sumt,.pc,.payform,.syncb,.track,.clocks,.nb,.sdgrid,.dtl,.card,.tabs,.ring,.navbtn{
+  background:#fff!important;border:1px solid #ececec!important;border-radius:var(--r-xl)!important}
+.card,.card.design,.card.life,.card.home,.card.beauty,.card.imp{background:#fff!important;color:#2A3340!important;--card-muted:#8a8a8a}
+
+/* шапка: просто время */
+html body .clocks,html body .clocks *{box-shadow:none!important;background:transparent!important}
+html body .tabs,html body .ring,html body .card,html body .nb,html body .dtl,html body .prog{box-shadow:none!important}
+.hello{display:none}
+.top{margin-bottom:18px}
+.clocks{border:0!important;padding:0!important;gap:22px;background:transparent!important}
+.clock{border-left:1px solid #ececec!important;padding-left:18px}
+.clock .time{color:#2A3340!important;font-weight:300!important;font-size:clamp(34px,8vw,48px)!important}
+.clock .tz,.mclock span{color:#9a9a9a!important;letter-spacing:.06em}
+.mclock b,.mclock.pink b{color:#2A3340!important;font-weight:400!important}
+.ring{border:1px solid #ececec!important}
+.ring .bgc{stroke:#eee!important}.ring .fgc{stroke:#6F9BD6!important}
+.ring b{color:#2A3340!important;font-weight:500!important}
+
+/* вкладки */
+.tabs{padding:4px!important;border-radius:12px!important}
+.tabs button{color:#8a8a8a!important;border-radius:9px!important;padding:8px 14px!important}
+.tabs button[aria-selected="true"]{background:#E3EDF9!important;color:#2F5D99!important}
+
+/* заголовки без декора */
+h2[data-over]::before,.sec-title h1::before{display:none!important}
+h1,h2{font-weight:600!important;letter-spacing:-.02em!important;color:#2A3340!important}
+h1{font-size:clamp(28px,6vw,36px)!important}
+h2{font-size:clamp(22px,5vw,28px)!important}
+h1 em,h2 em{font-style:normal!important;color:#2A3340!important;font-weight:600!important}
+.sec-head{margin:28px 0 12px!important}
+.sub,.stats{color:#8a8a8a!important}
+.stats b{color:#2A3340!important}
+
+/* кнопки */
+.newcol,.pbtn,.form .go,.inl button,.stbtn,.pfilter button[aria-selected="true"]{background:#E3EDF9!important;color:#2F5D99!important;border:0!important;border-radius:10px!important;font-weight:500!important}
+.pbtn.ghost,.obtn,.mv .chipbtn,.est-add,.pfilter button,.nbtoday,.navbtn,.bflag{background:#F1F6FC!important;color:#2F5D99!important;border:0!important;border-radius:10px!important}
+.navbtn{border:1px solid #ececec!important}
+.undo,.foot{color:#9a9a9a!important}
+.addbtn,.card .addbtn{color:#8a8a8a!important}
+.weeknav{color:#8a8a8a!important}
+
+/* поля */
+input,select,textarea{border-radius:10px!important}
+.form input,.inl input,.mv input,.srow input,.srow select,.srow textarea,.payform input,.payform select,.est-row input,.pc select,.ln input,.sb-inp{
+  background:#f6f6f6!important;border:0!important;color:#2A3340!important}
+.ln select{background:#f2f2f2!important;color:#2A3340!important}
+
+/* колонки задач */
+.card-h,.card-h .icon,.card.design .card-h,.card.life .card-h .icon,.card.design .card-h .icon,.card.home .card-h .icon,.card.beauty .card-h .icon{color:#2A3340!important}
+.ck,.card .ck{border-color:#bdbdbd!important}
+.task.done .ck,.card .task.done .ck,.subt.done .ck{background:#7FA6DA!important;border-color:#7FA6DA!important}
+.task.done .ttext{color:#b0b0b0!important}
+.donehead{color:#9a9a9a!important}
+
+/* категории: оттенки серого */
+.tg-design,.tg-life,.tg-home,.tg-beauty,.tg-tg,.tg-ig,.tg-pin,.tg-x,
+.ev.tg-design,.ev.tg-life,.ev.tg-home,.ev.tg-beauty,.ev.tg-tg,.ev.tg-ig,.ev.tg-pin,.ev.tg-x,
+.chipc,.chipc.design,.chipc.life,.chipc.beauty,.chipc.home,.chipc.imp{background:#f1f1f1!important;color:#2A3340!important}
+.ev{border-left-color:#9DBCE3!important}
+.ln .t span{font-weight:400!important}
+.sdcol header i{background:#9DBCE3!important}
+
+/* блокнот и календари */
+.nbday header,.sdcol header{border-bottom-color:#C9DAEE!important}
+.nbday.today header,.nbday.today header b,.nbday.today header span{color:#2F5D99!important;border-bottom-color:#7FA6DA!important}
+.nbday.today header b{font-weight:700!important}
+.nbday.past header b{color:#bdbdbd!important}
+.ln{border-bottom-color:#f0f0f0!important}
+.ln.done .c{background:#7FA6DA!important;border-color:#7FA6DA!important}
+.ln .c{border-color:#c4c4c4!important}
+.wtl-hd.today b{background:#7FA6DA!important;color:#fff!important}
+.wtl-hd.sel:not(.today) b{background:#E3EDF9!important;color:#2F5D99!important}
+.wtl-col.today,.wtl-col.sel:not(.today){background:#F6F9FD!important}
+.dtl-now{border-top-color:#5B8FD0!important}.dtl-now::before{background:#5B8FD0!important}
+.wtl-hd,.wtl-ad.corner,.wtl-hr{background:#fff!important}
+.bn ellipse[fill="#F7A8C8"],.bn ellipse[fill="#F2A7BE"],.bunny svg ellipse[fill="#F7A8C8"]{fill:#d9d9d9!important}
+.bn circle[fill="#F7A8C8"],.bunny svg circle[fill="#F7A8C8"]{fill:#e4e4e4!important}
+.bunny,.bunny.l0,.bunny.l1,.bunny.l2,.bunny.l3,.bunny.l4{background:#f2f2f2!important;color:#2A3340!important}
+.bunny.l4{background:#C9DAEE!important;color:#2F5D99!important}
+.badge,.badge.last{background:#f2f2f2!important;color:#2A3340!important}.badge.last{background:#E3EDF9!important;color:#2F5D99!important}
+
+/* трекеры публикаций */
+.track.stale{border-color:#9DBCE3!important;background:#F5F9FD!important}
+.trow .dot,.trow .dot.ok,.trow .dot.warn,.trow .dot.bad{background:#cfcfcf!important}
+.trow .dot.bad{background:#5B8FD0!important}
+.trow .val,.trow .val.ok,.trow .val.warn,.trow .val.bad{color:#2A3340!important}
+
+/* проекты */
+.pst,.pst.none,.pst.start,.pst.dev,.pst.rev,.pst.fix,.pst.save,.pst.print,.pst.send{background:#f2f2f2!important;color:#2A3340!important;border:0!important}
+.pst.none{color:#9a9a9a!important}
+.pst.done{background:#E3EDF9!important;color:#2F5D99!important}
+.bflag.paid{background:#E3EDF9!important;color:#2F5D99!important}
+.slink{color:#2A3340!important}
+.srow.shead{color:#9a9a9a!important}
+.srow{border:0!important;border-radius:0!important;background:transparent!important}.srow+.srow{border-top:1px solid #f0f0f0!important}
+@media (max-width:760px){.sumt{border:0!important}.srow{border:1px solid #ececec!important;border-radius:14px!important;background:#fff!important}}
+
+/* оплаты */
+.pc::before{background:#9DBCE3!important}.pc.paid::before{background:#cfcfcf!important}
+.pc .sm,.pc.paid .sm,.est-total b{color:#2A3340!important}
+.pc.paid .stbtn{background:#f2f2f2!important;color:#2A3340!important}
+.pc select.todo{background:#e9e9e9!important}
+
+/* мелочи */
+.toast{background:#2F5D99!important;color:#fff!important}.toast button{color:#fff!important;text-decoration:underline}
+.drag-ghost{background:#5B8FD0!important;color:#fff!important}
+.drop-on,.nbday.drop-on{outline-color:#7FA6DA!important;background:#F2F7FC!important}
+.syncb{border-color:#9DBCE3!important}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid #7FA6DA!important}
+@media (max-width:760px){
+  .tabs{border-radius:16px!important;background:rgba(255,255,255,.96)!important;border:1px solid #e6e6e6!important}
+  .tabs button{border-radius:12px!important}
+  .top .right .ring{background:#fff!important}
+}
+
+.tabs button[aria-selected="true"],.pfilter button[aria-selected="true"]{background:#D6E5F7!important;color:#24508C!important;font-weight:600!important}
 </style>
 </head>
 <body>
@@ -728,7 +859,7 @@ h1 em,h2 em{font-style:italic;font-weight:400}
 
 <script>
 /* автообновление: если на сайте новая версия — тихо перезагрузиться */
-const APP_V="202610220156";
+const APP_V="202610291445";
 (function(){try{
   if(sessionStorage.getItem("planner:upd")===APP_V)return;
   fetch(location.pathname+"?nocache="+Date.now(),{cache:"no-store"}).then(r=>r.text()).then(t=>{
