@@ -8,7 +8,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Планер">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#9C8AB4">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -976,11 +976,161 @@ html body .card{min-height:200px}
   .top .right .ring{position:relative!important;right:auto!important;bottom:auto!important}
 }
 
+
+/* ===== база знаний ===== */
+.kbup{display:inline-flex;align-items:center;border-radius:10px;padding:9px 14px;background:#F1F6FC;color:#2F5D99;font-size:13px;font-weight:500;cursor:pointer}
+html body .kb{padding:16px}
+.kbtop{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+html body .kbtop input{flex:1;min-width:200px;border:0!important;background:#F4F6F9!important;border-radius:12px!important;padding:10px 14px;font-size:14px}
+.kbcats{display:flex;gap:6px;flex-wrap:wrap}
+html body .kbcats button{border:0!important;border-radius:999px!important;padding:7px 12px;font-size:12.5px;background:#F4F6F9!important;color:#5B6574!important;cursor:pointer}
+html body .kbcats button[aria-pressed="true"]{background:#FCE8EF!important;color:#B0507A!important;font-weight:600}
+.kbgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+html body .kbcard{border:0!important;background:#F8FAFC!important;border-radius:16px!important;padding:14px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:6px;min-height:110px;font:inherit;color:#1E2633}
+html body .kbcard:hover{background:#F1F6FC!important}
+.kbcard .ic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-size:15px}
+.kbcard b{font-size:14px;font-weight:600;line-height:1.3;overflow-wrap:anywhere}
+.kbcard small{font-size:11.5px;color:#8A93A3;margin-top:auto}
+.kbcard .pv{font-size:12px;color:#6B7585;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.kbempty{color:#8A93A3;font-size:14px;padding:10px 4px}
+html body .kbbox{width:min(760px,calc(100vw - 24px));max-height:calc(100vh - 40px);display:flex;flex-direction:column}
+html body .kbbox .tsh input{flex:1;border:0!important;background:transparent!important;font-size:18px;font-weight:600;padding:4px 0}
+html body #kbText{flex:1;min-height:300px;border:1px solid var(--hub-line)!important;background:#fff!important;border-radius:14px!important;padding:12px;font-size:14px;line-height:1.55;resize:vertical;color:#1E2633}
+.kbmeta{font-size:12px;color:#8A93A3;margin-left:auto}
+.kbfile{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px}
+html body .kbfile a,html body .kbfile button,html body .kbfile label{border:0!important;background:#F1F6FC!important;color:#2F5D99!important;border-radius:999px!important;padding:6px 12px;font-size:12.5px;text-decoration:none;cursor:pointer}
+@media (max-width:860px){html body #kbText{min-height:240px}html body .kbbox{max-height:92vh}}
+
+/* ================= «Закат и дымчатое стекло» ================= */
+:root{--sx-cream:#FFF2CF;--sx-ink:#FBEFE6;--sx-mute:rgba(255,236,222,.62);--sx-faint:rgba(255,255,255,.10);--sx-glass:rgba(32,22,20,.52);--sx-glass2:rgba(255,255,255,.06);--sx-dark:rgba(12,9,9,.72)}
+html,html body{background:#C98A78!important;color-scheme:dark}
+html body::before{display:block!important;content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(180deg,#9C8AB4 0%,#C796A6 30%,#E9A07F 62%,#F3803F 100%)!important}
+html body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(60vmax 40vmax at 20% 30%,rgba(255,255,255,.12),transparent 60%),radial-gradient(50vmax 40vmax at 90% 80%,rgba(80,30,20,.18),transparent 60%)}
+html body .wrap,html body .wrap *{color:var(--sx-ink)}
+html body .wrap svg{color:inherit}
+/* стеклянные карточки */
+html body .clocks,html body .daycard,html body .hubcal,html body .hubchat,html body .sumt,html body .payform,html body .ins,html body .sdgrid,html body .pc,html body .note,html body .card,html body .kb,html body .track,html body .syncb,html body .srow{
+  background:var(--sx-glass)!important;-webkit-backdrop-filter:blur(28px) saturate(1.25)!important;backdrop-filter:blur(28px) saturate(1.25)!important;
+  border:1px solid rgba(255,255,255,.14)!important;box-shadow:0 20px 50px rgba(60,20,10,.22),inset 0 1px 0 rgba(255,255,255,.08)!important;border-radius:32px!important}
+html body .pc,html body .note,html body .track,html body .srow{border-radius:24px!important}
+html body .card.design,html body .card.life,html body .card.home,html body .card.beauty{background:var(--sx-glass)!important;border-color:rgba(255,255,255,.14)!important}
+html body .wrap .card .card-h,html body .wrap .card .card-h .icon,html body .wrap .card .addbtn{color:var(--sx-cream)!important}
+/* заголовки — кремовые, крупные */
+html body .wrap h1,html body .wrap h2,html body .hubttl h1,html body .page[data-page="day"] .sec-title h1{color:var(--sx-cream)!important;font-weight:650!important;letter-spacing:-.025em!important}
+html body .wrap h2{font-size:26px!important}
+html body .wrap .sub,html body .wrap .stats,html body .wrap .hubttl span,html body .wrap .clock .tz,html body .wrap .mclock span,html body .wrap .dctxt .st,html body .wrap .weeknav,html body .wrap .foot,html body .wrap .undo{color:var(--sx-mute)!important}
+html body .wrap .stats b,html body .wrap .clock .time,html body .wrap .mclock b,html body .wrap .mclock.pink b,html body .wrap .dctxt b,html body .wrap .ring b{color:var(--sx-cream)!important}
+html body .wrap .dctxt .nx{color:#FFD3B8!important}
+html body .wrap .clock{border-left-color:rgba(255,255,255,.14)!important}
+/* кольцо и прогресс — персиковый градиент */
+html body .daycard .ring{background:rgba(255,255,255,.06)!important}
+html body .ring .bgc{stroke:rgba(255,255,255,.14)!important}
+#rg stop:first-child{stop-color:#FFE1B8!important}#rg stop:last-child{stop-color:#F59A5E!important}
+html body .dcbar{background:rgba(255,255,255,.12)!important}html body .dcbar i{background:linear-gradient(90deg,#FFE7C6,#F7A26A)!important}
+/* кнопки: белые таблетки + тёмное стекло */
+html body .wrap .newcol,html body .wrap .pbtn,html body .wrap .form .go,html body .wrap .inl button,html body .tssave,html body .hcin button,html body .wrap .stbtn{background:#fff!important;color:#1B1412!important;border:0!important;border-radius:999px!important;font-weight:600!important}
+html body .hcin button svg{color:#1B1412!important}
+html body .wrap .pbtn.ghost,html body .wrap .obtn,html body .wrap .mv .chipbtn,html body .wrap .est-add,html body .wrap .pfilter button,html body .hbtn,html body .kbup,html body .wrap .bflag,html body .hcchips button,html body .kbcats button,html body .kbfile a,html body .kbfile button,html body .kbfile label,html body .tsdone{
+  background:rgba(255,255,255,.08)!important;color:var(--sx-ink)!important;border:1px solid rgba(255,255,255,.12)!important;border-radius:999px!important}
+html body .wrap .pfilter button[aria-selected="true"],html body .hubseg button[aria-selected="true"],html body .kbcats button[aria-pressed="true"]{background:var(--sx-dark)!important;color:#fff!important;border-color:rgba(255,255,255,.18)!important;box-shadow:none!important}
+html body .hubseg{background:rgba(255,255,255,.08)!important;border:1px solid rgba(255,255,255,.1)}
+html body .hubseg button{color:var(--sx-ink)!important}
+html body .wrap .pc.paid .stbtn{background:rgba(255,255,255,.12)!important;color:var(--sx-ink)!important}
+/* поля ввода */
+html body .wrap input,html body .wrap select,html body .wrap textarea,html body .tsbox input,html body .tsbox select,html body #kbText,html body .hcin,html body .kbtop input{
+  background:rgba(255,255,255,.07)!important;border:1px solid rgba(255,255,255,.12)!important;color:var(--sx-ink)!important;border-radius:16px!important}
+html body .hcin textarea{background:transparent!important;border:0!important}
+html body .wrap ::placeholder,html body .tsbox ::placeholder{color:rgba(255,236,222,.45)!important}
+html body .wrap select option,html body .tsbox select option{color:#1B1412;background:#fff}
+html body .wrap input[type=date],html body .wrap input[type=time],html body .tsbox input[type=date],html body .tsbox input[type=time]{color-scheme:dark}
+/* задачи и чекбоксы */
+html body .wrap .ck,html body .wrap .ln .c{border-color:rgba(255,255,255,.45)!important}
+html body .wrap .task.done .ck,html body .wrap .card .task.done .ck,html body .wrap .subt.done .ck,html body .wrap .ln.done .c{background:#fff!important;border-color:#fff!important}
+html body .wrap .task.done .ck svg path{stroke:#1B1412!important}
+html body .wrap .task.done .ttext,html body .wrap .donehead{color:var(--sx-mute)!important}
+html body .wrap .tmeta,html body .wrap .card-h .n{color:var(--sx-mute)!important}
+/* календарь */
+html body .hg-hd,html body .hg-hr,html body .hg-ad,html body .hg-ad.corner{background:rgba(30,21,19,.82)!important;-webkit-backdrop-filter:blur(20px)!important;backdrop-filter:blur(20px)!important;border-color:rgba(255,255,255,.08)!important}
+html body .hg-hd small,html body .hg-hr,html body .hg-ad.corner,html body .mo-wd{color:var(--sx-mute)!important}
+html body .hg-hd b{color:var(--sx-ink)!important}
+html body .hg-hd.today b{background:#fff!important;color:#1B1412!important}
+html body .hg-col{border-left-color:rgba(255,255,255,.07)!important}
+html body .hg-cell{border-top-color:rgba(255,255,255,.06)!important}
+html body .hg-cell:hover{background:rgba(255,255,255,.05)!important}
+html body .hg-col.today{background:rgba(255,230,200,.06)!important}
+html body .hg-now{border-top-color:#FFD2A6!important}html body .hg-now::before{background:#FFD2A6!important}
+html body .hg-cell.drop-on,html body .mo-cell.drop-on{background:rgba(255,220,190,.18)!important}
+html body .mo-cell{background:rgba(255,255,255,.05)!important;border:1px solid rgba(255,255,255,.08)!important}
+html body .mo-cell.out{background:transparent!important;border-color:transparent!important}
+html body .mo-cell.today{background:rgba(255,255,255,.14)!important;border-color:rgba(255,255,255,.25)!important}
+html body .mo-cell .d,html body .mo-cell.today .d{color:var(--sx-ink)!important}
+html body .mo-cell .d i{background:#FFD2A6!important}
+/* события по разделам — тонированное стекло */
+html body .wrap .hev{border:1px solid rgba(255,255,255,.1)!important;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+html body .wrap .hev.c-design,html body .wrap .tg-design,html body .wrap .chipc.design{background:rgba(240,150,185,.30)!important;color:#FFE1EC!important}
+html body .wrap .hev.c-beauty,html body .wrap .tg-beauty,html body .wrap .chipc.beauty{background:rgba(255,200,140,.28)!important;color:#FFEBD1!important}
+html body .wrap .hev.c-life,html body .wrap .tg-life,html body .wrap .chipc.life{background:rgba(150,180,235,.30)!important;color:#E3EEFF!important}
+html body .wrap .hev.c-home,html body .wrap .tg-home,html body .wrap .chipc.home{background:rgba(170,215,160,.26)!important;color:#E6F7DD!important}
+html body .wrap .hev.c-tg,html body .wrap .hev.c-ig,html body .wrap .hev.c-pin,html body .wrap .hev.c-x,html body .wrap .tg-tg,html body .wrap .tg-ig,html body .wrap .tg-pin,html body .wrap .tg-x{background:rgba(255,255,255,.12)!important;color:var(--sx-ink)!important}
+html body .wrap .hev b{color:inherit!important}
+/* чат Зайки */
+html body .hcth{border-bottom-color:rgba(255,255,255,.1)!important}
+html body .hcav{background:rgba(255,255,255,.12)!important}
+html body .hcth small{color:var(--sx-mute)!important}
+html body .wrap .msg.me{background:rgba(255,255,255,.92)!important;color:#1B1412!important}
+html body .wrap .msg.bot{background:rgba(255,255,255,.07)!important;border:1px solid rgba(255,255,255,.1)!important;color:var(--sx-ink)!important}
+html body .wrap .msg.bot .undo2{background:rgba(255,255,255,.14)!important;color:#fff!important}
+/* проекты, оплаты, база */
+html body .srow{background:transparent!important;border:0!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+html body .srow+.srow{border-top:1px solid rgba(255,255,255,.08)!important}
+html body .wrap .pst{background:rgba(255,255,255,.08)!important;color:var(--sx-ink)!important}
+html body .wrap .pst.done{background:#fff!important;color:#1B1412!important}
+html body .wrap .pst.rev,html body .wrap .pst.fix{background:rgba(240,150,185,.28)!important;color:#FFE1EC!important}
+html body .wrap .pc::before{background:#FFD2A6!important}html body .wrap .pc.paid::before{background:rgba(255,255,255,.3)!important}
+html body .wrap .pc .sm,html body .wrap .est-total b{color:var(--sx-cream)!important}
+html body .wrap .est{border-top-color:rgba(255,255,255,.1)!important}
+html body .wrap .kbcard{background:rgba(255,255,255,.06)!important;border:1px solid rgba(255,255,255,.08)!important}
+html body .wrap .kbcard:hover{background:rgba(255,255,255,.12)!important}
+html body .wrap .kbcard small,html body .wrap .kbcard .pv,html body .wrap .kbempty{color:var(--sx-mute)!important}
+html body .wrap .kbcard .ic{background:rgba(255,255,255,.12)!important}
+html body .wrap .ln{border-bottom-color:rgba(255,255,255,.08)!important}
+html body .wrap .sdcol header{border-bottom-color:rgba(255,255,255,.25)!important}
+html body .wrap .trow .dot{background:rgba(255,255,255,.3)!important}html body .wrap .trow .dot.bad{background:#FFB48A!important}
+html body .wrap .bunny{background:rgba(255,255,255,.1)!important}
+/* модальные окна */
+html body .tsbg{background:rgba(30,15,10,.35)!important;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+html body .tsbox{background:rgba(32,22,20,.82)!important;-webkit-backdrop-filter:blur(30px)!important;backdrop-filter:blur(30px)!important;border:1px solid rgba(255,255,255,.14)!important;color:var(--sx-ink)!important;border-radius:32px!important}
+html body .tsbox *{color:var(--sx-ink)}
+html body .tsh b,html body .kbbox .tsh input{color:var(--sx-cream)!important}
+html body .tsx,html body .tsdel,html body .kbmeta{color:var(--sx-mute)!important}
+html body .tssave{color:#1B1412!important}
+html body .toast{background:rgba(20,14,12,.85)!important;-webkit-backdrop-filter:blur(16px)!important;backdrop-filter:blur(16px)!important;color:#fff!important}
+@media (max-width:860px){html body .tsbox{border-radius:32px 32px 0 0!important}}
+
+
+/* фон-закат на html, чтобы был виден */
+html{background:#C796A6!important;min-height:100%}html::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,#9C8AB4 0%,#C796A6 30%,#E9A07F 62%,#F3803F 100%)}html body{background:transparent!important}
+html body{background:transparent!important}
+html body::before{display:none!important}
+html body .hg-hd,html body .hg-hr,html body .hg-ad,html body .hg-ad.corner{background:rgba(70,44,40,.55)!important}
+html body .wrap .card:not(.x1):not(.x2):not(.x3):not(.x4):not(.x5):not(.x6){background:var(--sx-glass)!important}
+html body .wrap .track:not(.x1):not(.x2):not(.x3){background:var(--sx-glass)!important}
+html body .wrap .track.stale:not(.x1){background:rgba(70,30,25,.55)!important;border-color:rgba(255,200,170,.4)!important}
+html body .top .right .daycard .ring:not(.x1){background:rgba(255,255,255,.08)!important}
+html body .wrap h1 em,html body .wrap h2 em{color:var(--sx-cream)!important;font-style:normal!important}
+/* приветствие */
+.greet{margin:6px 4px 18px}
+html body .greet h1{margin:0;font-size:clamp(34px,7vw,56px)!important;line-height:1.05!important;font-weight:650!important;letter-spacing:-.035em!important;color:var(--sx-cream)!important}
+.greet .nm{display:inline-block;padding:.02em .38em .06em;margin:0 .06em;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transform:rotate(-4deg);box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 8px 20px rgba(60,20,10,.18);color:#fff}
+html body .greet p{margin:10px 0 0;font-size:16px;color:var(--sx-ink)!important;opacity:.85}
+
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="syncb" id="syncBanner" hidden></div>
+  <div class="greet"><h1 id="greet">Привет, Лена!</h1><p id="greetSub"></p></div>
   <header class="top">
     <div class="hello" id="hello"></div>
     <div class="clocks"><div class="mclock"><span>Москва</span><b id="cMsk">--:--</b></div><div class="mclock pink"><span>Самара</span><b id="cSam">--:--</b></div><div class="clock"><div class="tz">Новосибирск<br>UTC+7</div><div class="time" id="clock">--:--</div></div></div>
@@ -1037,6 +1187,17 @@ html body .card{min-height:200px}
   <section class="sumt" id="sumT" aria-label="Сводка проектов"></section>
 
   </div>
+  <div class="page" data-page="kb">
+  <div class="sec-head"><div class="sec-title"><h2>База знаний</h2></div><div class="stats"><button class="newcol" id="kbNew" type="button">+ Документ</button><label class="kbup" for="kbFile">Загрузить файл</label><input type="file" id="kbFile" hidden accept=".pdf,.doc,.docx,.txt,.rtf,.odt,.xls,.xlsx,.png,.jpg,.jpeg"></div></div>
+  <section class="kb blk"><div class="kbtop"><input type="search" id="kbQ" placeholder="Поиск по названию и тексту" aria-label="Поиск"><div class="kbcats" id="kbCats"></div></div><div class="kbgrid" id="kbGrid"></div></section>
+  </div>
+  <div class="tsheet kbsheet" id="kbSheet" hidden><div class="tsbg" id="kbBg"></div><div class="tsbox kbbox" role="dialog" aria-modal="true" aria-label="Документ">
+    <div class="tsh"><input type="text" id="kbTitle" placeholder="Название" maxlength="140" aria-label="Название"><button type="button" class="tsx" id="kbClose" aria-label="Закрыть">×</button></div>
+    <div class="tsrow"><select id="kbCat" aria-label="Категория"></select><span class="kbmeta" id="kbMeta"></span></div>
+    <textarea id="kbText" placeholder="Текст документа: договор, бриф, шаблон сообщения…" aria-label="Текст"></textarea>
+    <div class="kbfile" id="kbFileRow"></div>
+    <div class="tsact"><button type="button" class="tsdel" id="kbDel">Удалить</button><button type="button" class="tsdone" id="kbCopy">Скопировать текст</button><button type="button" class="tssave" id="kbSave">Сохранить</button></div>
+  </div></div>
   <div class="page" data-page="ideas"><div id="insights"></div></div>
   <div class="page" data-page="pay">
 
@@ -1066,7 +1227,7 @@ html body .card{min-height:200px}
 
 <script>
 /* автообновление: если на сайте новая версия — тихо перезагрузиться */
-const APP_V="202611060029";
+const APP_V="202611060038";
 (function(){try{
   if(sessionStorage.getItem("planner:upd")===APP_V)return;
   fetch(location.pathname+"?nocache="+Date.now(),{cache:"no-store"}).then(r=>r.text()).then(t=>{
@@ -1126,6 +1287,7 @@ function norm(s){
     b.m3=true;b.__mig=true;
   }
   if(Array.isArray(s.chat))b.chat=s.chat.slice(-60);
+  b.kb=Array.isArray(s.kb)?s.kb.filter(x=>x&&x.id):[];b.kbSeeded=!!s.kbSeeded;
   b.m4=!!s.m4;
   if(!b.m4){ // убрать «Задачи на сегодня», добавить Beauty и Дом
     b.tasks.forEach(t=>{if(t.col==="imp")t.col="life"});
@@ -1288,7 +1450,7 @@ function setDate(kind,val){ // ручная дата: всё, что позже,
 function afterLoad(){if(S.__mig){delete S.__mig;save()}}
 
 /* ---------- отрисовка ---------- */
-function render(){try{renderHead();renderCal();renderNotebook();renderSomeday();renderHub();renderChat();renderRing();renderDayTL();renderCols();renderProg();renderSummary();renderNotes();renderPay()}catch(e){console.error(e)}}
+function render(){try{renderHead();renderCal();renderNotebook();renderSomeday();renderHub();renderChat();renderRing();renderDayTL();renderCols();renderProg();renderSummary();renderKB();renderGreet();renderNotes();renderPay()}catch(e){console.error(e)}}
 
 function renderHead(){
   const t=today(),k=key(sel),diff=Math.round((sel-t)/864e5);
@@ -2082,6 +2244,90 @@ $("hcText").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.pr
 $("hcText").addEventListener("input",e=>{const a=e.target;a.style.height="auto";a.style.height=Math.min(110,a.scrollHeight)+"px"});
 [["Что сегодня?","что сегодня"],["Что завтра?","что завтра"],["Заполни день","заполни день"],["Неделя","что на неделе"]].forEach(([l,c])=>$("hcChips").append(btn(null,l,()=>sendChat(c))));
 
+/* ================= база знаний ================= */
+const KB_CATS=[["contract","Договоры","📄","#EAF1FB"],["brief","Брифы","📝","#FCE8EF"],["msg","Шаблоны сообщений","💬","#EEF6E8"],["price","Прайс и КП","💰","#FFF4D9"],["other","Другое","📎","#F1EEF7"]];
+const KB_MAX=650*1024;let kbFilter="all",kbOpen=null;const kbCache={};
+const kbUrl=id=>"https://firestore.googleapis.com/v1/projects/"+FB.project+"/databases/(default)/documents/vaults/"+vaultKey+"-kb-"+id+"?key="+FB.apiKey;
+async function kbLoad(id){
+  if(kbCache[id])return kbCache[id];
+  let v=null;try{v=JSON.parse(localStorage.getItem("planner:kb:"+id)||"null")}catch(e){}
+  if(vaultKey){try{const r=await timeout(fetch(kbUrl(id),{cache:"no-store"}),15000);if(r.ok){const j=await r.json();const raw=j.fields&&j.fields.data&&j.fields.data.stringValue;if(raw)v=JSON.parse(raw)}}catch(e){}}
+  v=v||{text:"",file:null};kbCache[id]=v;return v;
+}
+async function kbStore(id,v){
+  kbCache[id]=v;
+  try{localStorage.setItem("planner:kb:"+id,JSON.stringify(v.file&&v.file.data.length>300000?{text:v.text,file:null}:v))}catch(e){}
+  if(!vaultKey)return true;
+  try{const r=await timeout(fetch(kbUrl(id),{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify({fields:{data:{stringValue:JSON.stringify(v)}}})}),30000);return r.ok}catch(e){return false}
+}
+function kbCatOf(c){return KB_CATS.find(x=>x[0]===c)||KB_CATS[4]}
+function renderKB(){
+  const g=$("kbGrid");if(!g)return;const cats=$("kbCats");cats.textContent="";
+  [["all","Все"]].concat(KB_CATS).forEach(([k,n])=>{const b=btn(null,n+(k==="all"?" "+S.kb.length:" "+S.kb.filter(x=>x.cat===k).length),()=>{kbFilter=k;renderKB()});b.setAttribute("aria-pressed",kbFilter===k?"true":"false");cats.append(b)});
+  const q=normT($("kbQ").value.trim());g.textContent="";
+  const list=S.kb.filter(x=>(kbFilter==="all"||x.cat===kbFilter)&&(!q||normT(x.title+" "+(x.pv||"")).includes(q))).sort((a,b)=>b.updated-a.updated);
+  if(!list.length){g.append(mk("div","kbempty",S.kb.length?"Ничего не нашлось":"Здесь будут твои договоры, брифы и шаблоны. Нажми «+ Документ» или «Загрузить файл»."));return}
+  list.forEach(x=>{const [,cn,ic,bg]=kbCatOf(x.cat);const c=btn("kbcard","",()=>kbEdit(x.id));const i=mk("span","ic",ic);i.style.background=bg;
+    const d=new Date(x.updated);c.append(i,mk("b",null,x.title||"Без названия"));if(x.pv)c.append(mk("span","pv",x.pv));
+    c.append(mk("small",null,cn+(x.fileName?" · 📎 "+x.fileName:"")+" · "+d.getDate()+" "+MON[d.getMonth()]));g.append(c)});
+}
+$("kbQ").addEventListener("input",renderKB);
+function kbFileRow(v){const r=$("kbFileRow");r.textContent="";
+  if(v.file){r.append(mk("span",null,"📎 "+v.file.name+" · "+Math.round(v.file.size/1024)+" КБ"));
+    const a=mk("a",null,"Скачать");a.href="data:"+(v.file.type||"application/octet-stream")+";base64,"+v.file.data;a.download=v.file.name;r.append(a);
+    r.append(btn(null,"Убрать файл",()=>{v.file=null;kbFileRow(v)}))}
+  const lb=mk("label",null,v.file?"Заменить файл":"Прикрепить файл");const inp=mk("input");inp.type="file";inp.hidden=true;lb.append(inp);
+  inp.addEventListener("change",async()=>{const f=inp.files[0];if(!f)return;const fv=await kbReadFile(f);if(fv){v.file=fv;if(!$("kbTitle").value.trim())$("kbTitle").value=f.name.replace(/\.[^.]+$/,"");kbFileRow(v)}});r.append(lb)}
+function kbReadFile(f){return new Promise(res=>{if(f.size>KB_MAX){alert("Файл больше 650 КБ — такой не поместится. Сожми PDF или вставь текст документа в поле.");return res(null)}
+  const rd=new FileReader();rd.onload=()=>res({name:f.name,type:f.type,size:f.size,data:String(rd.result).split(",")[1]});rd.onerror=()=>res(null);rd.readAsDataURL(f)})}
+async function kbEdit(id,preset){
+  kbOpen=id;const meta=S.kb.find(x=>x.id===id);$("kbSheet").hidden=false;
+  const cs=$("kbCat");cs.textContent="";KB_CATS.forEach(([k,n])=>{const o=mk("option",null,n);o.value=k;cs.append(o)});
+  $("kbTitle").value=meta?meta.title:"";cs.value=meta?meta.cat:(kbFilter!=="all"?kbFilter:"contract");$("kbText").value="Загружаю…";$("kbText").disabled=true;
+  $("kbMeta").textContent=meta?"изменён "+new Date(meta.updated).toLocaleDateString("ru-RU"):"новый";$("kbDel").hidden=!meta;
+  const v=meta?JSON.parse(JSON.stringify(await kbLoad(id))):(preset||{text:"",file:null});
+  if(kbOpen!==id)return;$("kbSheet")._v=v;$("kbText").value=v.text||"";$("kbText").disabled=false;kbFileRow(v);if(!meta)$("kbTitle").focus();
+}
+function kbClose(){$("kbSheet").hidden=true;kbOpen=null}
+$("kbClose").addEventListener("click",kbClose);$("kbBg").addEventListener("click",kbClose);
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("kbSheet").hidden)kbClose()});
+$("kbNew").addEventListener("click",()=>kbEdit(uid()));
+$("kbFile").addEventListener("change",async e=>{const f=e.target.files[0];e.target.value="";if(!f)return;const fv=await kbReadFile(f);if(!fv)return;
+  let text="";if(/^text\//.test(f.type)||/\.txt$/i.test(f.name)){try{text=await f.text()}catch(x){}}
+  const id=uid(),cat=/договор/i.test(f.name)?"contract":/бриф|brief/i.test(f.name)?"brief":/прайс|кп|price/i.test(f.name)?"price":"other";
+  await kbEdit(id,{text,file:fv});$("kbTitle").value=f.name.replace(/\.[^.]+$/,"");$("kbCat").value=cat});
+$("kbSave").addEventListener("click",async()=>{
+  const id=kbOpen,v=$("kbSheet")._v||{text:"",file:null};if(!id)return;v.text=$("kbText").value;
+  const title=$("kbTitle").value.trim()||(v.file?v.file.name:"Без названия");
+  const b=$("kbSave");b.disabled=true;b.textContent="Сохраняю…";const ok=await kbStore(id,v);b.disabled=false;b.textContent="Сохранить";
+  let m=S.kb.find(x=>x.id===id);if(!m){m={id};S.kb.push(m)}
+  Object.assign(m,{title,cat:$("kbCat").value,updated:Date.now(),pv:(v.text||"").replace(/\s+/g," ").slice(0,140),fileName:v.file?v.file.name:""});
+  kbClose();save();render();toast(ok?"Сохранено в базе знаний":"Сохранено на устройстве — в облако отправлю, когда появится связь");
+});
+$("kbCopy").addEventListener("click",e=>{const t=$("kbText").value;try{navigator.clipboard.writeText(t).then(()=>{e.target.textContent="Скопировано";setTimeout(()=>e.target.textContent="Скопировать текст",1500)})}catch(x){}});
+$("kbDel").addEventListener("click",async()=>{const id=kbOpen;const m=S.kb.find(x=>x.id===id);if(!m||!confirm("Удалить «"+m.title+"»?"))return;
+  S.kb=S.kb.filter(x=>x.id!==id);kbStore(id,{text:"",file:null});try{localStorage.removeItem("planner:kb:"+id)}catch(e){}kbClose();save();render()});
+function kbSeed(){if(S.kbSeeded)return;S.kbSeeded=true;const id=uid();
+  const text="БРИФ НА ФИРМЕННЫЙ СТИЛЬ\n\n1. О бренде\n— Название бренда, как оно появилось?\n— Чем занимаетесь, какие продукты/услуги?\n— Где продаётесь (салон, маркетплейсы, сайт, соцсети)?\n\n2. Аудитория\n— Кто ваш клиент: возраст, город, доход, интересы?\n— Почему выбирают вас, а не конкурентов?\n\n3. Позиционирование\n— 3–5 слов, какими вас должны ощущать (например: нежный, профессиональный, дорогой)\n— Ценности бренда\n— Конкуренты и бренды, которые нравятся / не нравятся\n\n4. Задача\n— Что нужно разработать: логотип, фирменный стиль, упаковка, носители\n— Что уже есть и что можно/нельзя менять\n— Где будет использоваться айдентика\n\n5. Визуальные пожелания\n— Цвета, которые хотите / не хотите\n— Примеры, которые нравятся (ссылки, референсы)\n\n6. Сроки и бюджет\n— Желаемый срок\n— Бюджет\n— Кто принимает решения по проекту\n";
+  S.kb.push({id,title:"Бриф на фирменный стиль",cat:"brief",updated:Date.now(),pv:text.replace(/\s+/g," ").slice(0,140),fileName:""});kbStore(id,{text,file:null})}
+
+/* ---------- приветствие ---------- */
+function renderGreet(){
+  const g=$("greet");if(!g)return;
+  const k=key(today()),ts=dayTasks(k),n=ts.length,left=ts.filter(t=>!isDone(t,k)).length;
+  const h=+tzTime("Asia/Novosibirsk").slice(0,2),nm=new Date().getHours()*60+new Date().getMinutes();
+  const nx=ts.filter(t=>!isDone(t,k)&&t.time&&tEnd(t)>nm).sort(byTime)[0]||ts.find(t=>!isDone(t,k));
+  const pick=a=>a[(today().getDate()+a.length)%a.length];
+  let pre,post="",sub;
+  if(h<5){pre="Доброй ночи,";post="";sub=left?"Остальное подождёт до утра 🌙":"Пора отдыхать 🌙"}
+  else if(n&&!left){pre=pick(["Всё сделано,","День закрыт,","Ты умница,"]);post="🎉";sub=h>=18?"Можно спокойно отдыхать 🌙":"Можно выдохнуть или взять что-то из «Когда-нибудь»"}
+  else if(left>=7){pre=pick(["Сегодня много дел,","Насыщенный день,","Держись,"]);post="";sub="Осталось "+left+" "+plural(left,"дело","дела","дел")+(nx?". Начнём с «"+nx.text+"»":"")+" — ты справишься 💪"}
+  else if(h<12){pre=pick(["Доброе утро,","Привет,","С добрым утром,"]);sub=n?"Сегодня "+n+" "+plural(n,"дело","дела","дел")+(nx?", первое — «"+nx.text+"»"+(nx.time?" в "+nx.time:""):""):"День свободный ☀️ Что запланируем?"}
+  else if(h<18){pre=pick(["Добрый день,","Привет,","Как дела,"]);sub=left?"Осталось "+left+" "+plural(left,"дело","дела","дел")+(nx?", дальше — «"+nx.text+"»"+(nx.time?" в "+nx.time:""):""):"Дел на сегодня нет — можно творить 🎨"}
+  else{pre=pick(["Добрый вечер,","Вечер,","Привет,"]);sub=left?"Осталось "+left+" "+plural(left,"дело","дела","дел")+". Может, что-то перенести на завтра?":"Вечер свободен 🌙"}
+  g.textContent="";g.append(pre+" ");const w=mk("span","nmw");w.style.whiteSpace="nowrap";const s=mk("span","nm","Лена");w.append(s,post?" "+post:"!");g.append(w);$("greetSub").textContent=sub;return;g.append(s);g.append(post?" "+post:"!");$("greetSub").textContent=sub;
+}
+setInterval(renderGreet,60000);
 /* ---------- оплата от клиентов ---------- */
 const INV=[["need","Выставить счёт"],["sent","Счёт выставлен"],["req","Выслать реквизиты"],["reqsent","Реквизиты отправлены"],["no","Счёт не нужен"]];
 const REC=[["need","Отправить чек"],["sent","Чек отправлен"],["no","Чек не нужен"]];
@@ -2281,10 +2527,11 @@ $("impFile").addEventListener("change",e=>{const f=e.target.files[0];if(!f)retur
 (function(){const w=document.querySelector(".wrap"),foot=$("foot");if(!w||!foot)return;
   const P=n=>document.querySelector('.page[data-page="'+n+'"]');
   const sd=document.querySelector(".someday");const sdPage=document.createElement("div");sdPage.className="page";sdPage.dataset.page="someday";if(sd)sdPage.append(sd);
-  ["week","day","projects","pay","ideas"].forEach(n=>{const p=P(n);if(p)w.insertBefore(p,foot)});w.insertBefore(sdPage,foot);
+  ["week","day","projects","pay","kb","ideas"].forEach(n=>{const p=P(n);if(p)w.insertBefore(p,foot)});w.insertBefore(sdPage,foot);
 })();
 
 showPage("week",true);
+setTimeout(()=>{if(!S.kbSeeded){kbSeed();save();render()}},4000);
 afterLoad();render();scrollCalToNow();tick();setInterval(tick,10000);
 
 /* ---------- запуск синхронизации ---------- */
