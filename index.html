@@ -933,6 +933,49 @@ html body .tssave{background:var(--hub-pinkink)!important;color:#fff!important;f
 }
 @media (min-width:861px){.mo-cell .dots{display:none}}
 
+
+/* ================= UI-лента: всё блоками на одной странице ================= */
+html,body{background:#F4F6F9!important}
+.wrap{max-width:1240px}
+#tabs{display:none!important}
+#dtl{display:none!important}
+html body .page[data-page="day"] .sec-title h1{font-size:22px!important;font-weight:650!important}
+.page{display:block!important;animation:none!important;margin-top:18px}
+.page.active{display:block!important}
+html body .blk,html body .hubcal,html body .hubchat,html body .dtl,html body .sumt,html body .payform,html body .ins,html body .sdgrid,html body .pc,html body .note,html body .card,html body .daycard,html body .clocks{
+  background:#fff!important;border:0!important;border-radius:22px!important;box-shadow:0 1px 2px rgba(20,30,60,.04),0 8px 28px rgba(20,30,60,.06)!important}
+.sec-head{margin:34px 4px 12px!important}
+h1,h2{color:#1E2633!important}
+html body h2{font-size:22px!important;font-weight:650!important;letter-spacing:-.015em!important}
+/* шапка: часы + маленький блок «день» */
+.top{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:stretch;margin-bottom:6px!important}
+.top .hello{display:none!important}
+html body .clocks{padding:16px 20px!important;justify-content:space-between;align-items:center;gap:16px!important}
+.top .right{margin:0!important;display:block}
+html body .daycard{display:flex;align-items:center;gap:16px;padding:14px 18px;height:100%;box-sizing:border-box}
+html body .daycard .ring{position:relative!important;width:64px!important;height:64px!important;flex:none;border:0!important;background:#F4F7FC!important;box-shadow:none!important}
+.daycard .ring small{display:none}
+.dctxt{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
+.dctxt b{font-size:15px;font-weight:650;color:#1E2633}
+.dctxt .st{font-size:13px;color:#6B7585}
+.dctxt .nx{font-size:13px;color:#B0507A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dcbar{height:6px;border-radius:6px;background:#EEF2F8;overflow:hidden;margin-top:4px}
+.dcbar i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,#9DBCE3,#EAA3BF);transition:width .4s}
+/* календарь — общий, без чата сбоку на узких */
+.hub{margin-top:4px}
+/* колонки дня */
+.cols{padding:2px 2px 10px}
+html body .card{min-height:200px}
+/* оплаты и прочее */
+.plist{gap:10px}
+.foot{margin-top:40px}
+@media (max-width:760px){
+  .top{grid-template-columns:1fr}
+  html body .clocks{padding:12px 14px!important}
+  .wrap{padding-bottom:40px!important}
+  .top .right .ring{position:relative!important;right:auto!important;bottom:auto!important}
+}
+
 </style>
 </head>
 <body>
@@ -941,7 +984,7 @@ html body .tssave{background:var(--hub-pinkink)!important;color:#fff!important;f
   <header class="top">
     <div class="hello" id="hello"></div>
     <div class="clocks"><div class="mclock"><span>Москва</span><b id="cMsk">--:--</b></div><div class="mclock pink"><span>Самара</span><b id="cSam">--:--</b></div><div class="clock"><div class="tz">Новосибирск<br>UTC+7</div><div class="time" id="clock">--:--</div></div></div>
-    <div class="right"><button class="ring" id="ring" type="button" aria-label="Прогресс сегодня"><svg viewBox="0 0 56 56" aria-hidden="true"><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9FBFE3"/><stop offset="1" stop-color="#8E1828"/></linearGradient></defs><circle class="bgc" cx="28" cy="28" r="24" fill="none" stroke-width="4"/><circle class="fgc" id="ringFg" cx="28" cy="28" r="24" fill="none" stroke-width="4" stroke-linecap="round" stroke-dasharray="150.8" stroke-dashoffset="150.8"/></svg><b id="ringPct">0%</b><small>сегодня</small></button></div>
+    <div class="right"><div class="daycard"><button class="ring" id="ring" type="button" aria-label="Прогресс сегодня"><svg viewBox="0 0 56 56" aria-hidden="true"><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9FBFE3"/><stop offset="1" stop-color="#8E1828"/></linearGradient></defs><circle class="bgc" cx="28" cy="28" r="24" fill="none" stroke-width="4"/><circle class="fgc" id="ringFg" cx="28" cy="28" r="24" fill="none" stroke-width="4" stroke-linecap="round" stroke-dasharray="150.8" stroke-dashoffset="150.8"/></svg><b id="ringPct">0%</b><small>сегодня</small></button><div class="dctxt"><b id="dcTitle">Сегодня</b><span class="st" id="dcStat"></span><span class="nx" id="dcNext"></span><div class="dcbar"><i id="dcBar"></i></div></div></div></div>
   </header>
 <nav class="tabs" id="tabs" role="tablist" aria-label="Разделы"><button type="button" role="tab" data-p="week" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="4" y="3.5" width="16" height="17" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Календарь</span></button><button type="button" role="tab" data-p="day" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3.5" y="5" width="7.5" height="14" rx="2.5"/><rect x="13" y="5" width="7.5" height="9" rx="2.5"/></svg><span>День</span></button><button type="button" role="tab" data-p="projects" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4.5l5 5L9 20H4v-5z"/></svg><span>Проекты</span></button><button type="button" role="tab" data-p="pay" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3.5" y="6" width="17" height="12" rx="3"/><path d="M3.5 10h17M7 14.5h4"/></svg><span>Оплаты</span></button><button type="button" role="tab" data-p="ideas" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 17h6M10 20h4M12 3.5a5.5 5.5 0 0 0-3.2 10c.6.5 1.2 1.3 1.2 2.1V16h4v-.4c0-.8.6-1.6 1.2-2.1A5.5 5.5 0 0 0 12 3.5z"/></svg><span>Идеи</span></button></nav>
 
@@ -1023,7 +1066,7 @@ html body .tssave{background:var(--hub-pinkink)!important;color:#fff!important;f
 
 <script>
 /* автообновление: если на сайте новая версия — тихо перезагрузиться */
-const APP_V="202611041512";
+const APP_V="202611060029";
 (function(){try{
   if(sessionStorage.getItem("planner:upd")===APP_V)return;
   fetch(location.pathname+"?nocache="+Date.now(),{cache:"no-store"}).then(r=>r.text()).then(t=>{
@@ -1249,7 +1292,7 @@ function render(){try{renderHead();renderCal();renderNotebook();renderSomeday();
 
 function renderHead(){
   const t=today(),k=key(sel),diff=Math.round((sel-t)/864e5);
-  $("dayTitle").textContent=diff===0?"Сегодня":diff===1?"Завтра":diff===-1?"Вчера":WD[sel.getDay()];
+  $("dayTitle").textContent="Задачи "+(diff===0?"на сегодня":diff===1?"на завтра":diff===-1?"на вчера":"на "+sel.getDate()+" "+MON[sel.getMonth()]);
   $("daySub").textContent=(diff>=-1&&diff<=1?WD[sel.getDay()]+", ":"")+sel.getDate()+" "+MON[sel.getMonth()];
   const ts=dayTasks(k),dn=ts.filter(x=>isDone(x,k)).length;
   $("sTot").textContent=ts.length;$("sDone").textContent=dn;$("sLeft").textContent=ts.length-dn;
@@ -1615,12 +1658,14 @@ $("prAdd").addEventListener("click",()=>{
 /* ---------- «Готово» → в оплату ---------- */
 const DNK_NAME="ДНК Фактори - фабрика ИП РЯБИНОВ Е.А.";
 const isDnk=p=>/днк|dnk/i.test(p.client||"");
+const CLIENT_GROUPS=[{re:/днк|dnk/i,name:DNK_NAME},{re:/середин/i,name:"Лена Середина"}];
+const groupOf=name=>CLIENT_GROUPS.find(g=>g.re.test(name||""));
 function billProject(p){
   if(p.billed)return;
   const k=key(today()),item={id:uid(),name:(p.title||"").trim()||(p.client||"").trim()||"Проект",qty:1,price:"",date:k,fromProject:p.id};
   let c,created=false;
-  if(isDnk(p)){c=S.clients.find(x=>!x.paid&&x.name===DNK_NAME)}
-  if(!c){c={id:uid(),name:isDnk(p)?DNK_NAME:((p.client||"").trim()||item.name),amount:0,items:[],invoice:"need",receipt:"need",paid:false,paidAt:null,created:Date.now()};S.clients.push(c);created=true}
+  const grp=groupOf(p.client);if(grp){c=S.clients.find(x=>!x.paid&&x.name===grp.name)}
+  if(!c){c={id:uid(),name:grp?grp.name:((p.client||"").trim()||item.name),amount:0,items:[],invoice:"need",receipt:"need",paid:false,paidAt:null,created:Date.now()};S.clients.push(c);created=true}
   if(!c.items)c.items=[];
   c.items=c.items.filter(it=>(it.name||"").trim()||num(it.price)); // убрать пустые строки
   c.items.push(item);
@@ -1662,12 +1707,17 @@ function showPage(p,noScroll){
   document.querySelectorAll(".page").forEach(x=>x.classList.toggle("active",x.dataset.page===p));
   document.querySelectorAll("#tabs button").forEach(b=>b.setAttribute("aria-selected",b.dataset.p===p?"true":"false"));
   try{localStorage.setItem("planner:tab",p)}catch(e){}
-  if(!noScroll)window.scrollTo({top:0,behavior:"instant"in window?"instant":"auto"});
+  if(!noScroll){const el=document.querySelector('.page[data-page="'+p+'"]');if(el)el.scrollIntoView({behavior:"smooth",block:"start"})}
 }
 document.querySelectorAll("#tabs button").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.p)));
 
 /* ---------- кольцо прогресса (сегодня) ---------- */
 function renderRing(){
+  try{const k=key(today()),ts=dayTasks(k),dn=ts.filter(t=>isDone(t,k)).length,p=ts.length?Math.round(dn/ts.length*100):0;
+    const d=today();$("dcTitle").textContent="Сегодня, "+WD[d.getDay()].toLowerCase()+" "+d.getDate()+" "+MON[d.getMonth()];
+    $("dcStat").textContent=ts.length?"Сделано "+dn+" из "+ts.length+(p===100?" — день закрыт 🎉":""):"Задач пока нет";
+    const nm=new Date().getHours()*60+new Date().getMinutes(),nx=ts.filter(t=>!isDone(t,k)&&t.time&&tEnd(t)>nm).sort(byTime)[0]||ts.find(t=>!isDone(t,k));
+    $("dcNext").textContent=nx?"Дальше: "+(nx.time?nx.time+" ":"")+nx.text:"";$("dcBar").style.width=p+"%"}catch(e){}
   const k=key(today()),ts=dayTasks(k),dn=ts.filter(t=>isDone(t,k)).length,pct=ts.length?Math.round(dn/ts.length*100):0;
   const C=2*Math.PI*24;$("ringFg").setAttribute("stroke-dashoffset",String(C*(1-pct/100)));
   $("ringPct").textContent=pct+"%";
@@ -1828,10 +1878,10 @@ function renderDayTL_old(){
 function openTask(t){openT.add(t.id);render();setTimeout(()=>{const el=[...document.querySelectorAll("#cols .ttext")].find(x=>x.textContent===t.text);if(el){el.scrollIntoView({behavior:"smooth",block:"center",inline:"center"})}},60)}
 setInterval(()=>{if(!document.hidden&&document.querySelector('.page.active[data-page="day"]'))renderDayTL()},60000);
 /* ================= уютный календарь (день / неделя / месяц) ================= */
-let hubV="day";try{hubV=localStorage.getItem("planner:hubv")||"day"}catch(e){}
+let hubV="week";try{hubV=localStorage.getItem("planner:hubv2")||"week"}catch(e){}
 const HUBH=()=>window.innerWidth<=860?44:48;
 const cc=id=>"c-"+colClass(id);
-function hubSetView(v){hubV=v;try{localStorage.setItem("planner:hubv",v)}catch(e){}hubScrolled=null;renderHub()}
+function hubSetView(v){hubV=v;try{localStorage.setItem("planner:hubv2",v)}catch(e){}hubScrolled=null;renderHub()}
 document.querySelectorAll(".hubseg button").forEach(b=>b.addEventListener("click",()=>hubSetView(b.dataset.v)));
 $("hubPrev").addEventListener("click",()=>{sel=hubV==="day"?addDays(sel,-1):hubV==="week"?addDays(sel,-7):new Date(sel.getFullYear(),sel.getMonth()-1,1);hubScrolled=null;render()});
 $("hubNext").addEventListener("click",()=>{sel=hubV==="day"?addDays(sel,1):hubV==="week"?addDays(sel,7):new Date(sel.getFullYear(),sel.getMonth()+1,1);hubScrolled=null;render()});
@@ -2046,7 +2096,10 @@ $("pfAdd").addEventListener("click",()=>{
   if(!name){$("pfName").focus();return} if(!(amount>=0)){$("pfSum").focus();return}
   const data={name,amount,invoice:$("pfInv").value,receipt:$("pfRec").value};
   if(pEdit){const c=S.clients.find(x=>x.id===pEdit);if(c)Object.assign(c,data)}
-  else{const id=uid();S.clients.push({id,...data,items:[],paid:false,paidAt:null,created:Date.now()});if(!raw)openEst.add(id)}
+  else{const grp=groupOf(name);const ex=grp&&S.clients.find(x=>!x.paid&&x.name===grp.name);
+    if(ex){ex.items=(ex.items||[]).filter(it=>(it.name||"").trim()||num(it.price));if(!ex.items.length&&+ex.amount>0)ex.items.push({id:uid(),name:"Ранее",qty:1,price:String(ex.amount),date:""});
+      ex.items.push({id:uid(),name:"",qty:1,price:raw?String(amount):"",date:key(today())});openEst.add(ex.id);toast("Добавила в общую смету «"+grp.name+"»")}
+    else{const id=uid();if(grp)data.name=grp.name;S.clients.push({id,...data,items:grp?[{id:uid(),name:"",qty:1,price:raw?String(amount):"",date:key(today())}]:[],paid:false,paidAt:null,created:Date.now()});if(!raw||grp)openEst.add(id)}}
   pfReset();save();render();
 });
 $("pfCancel").addEventListener("click",()=>{pfReset()});
@@ -2223,7 +2276,15 @@ $("copyLink").addEventListener("click",e=>{if(!vaultKey){askKey();window.scrollT
 $("exp").addEventListener("click",()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:"application/json"}));a.download="planer-"+key(today())+".json";document.body.append(a);a.click();a.remove()});
 $("imp").addEventListener("click",()=>$("impFile").click());
 $("impFile").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const v=JSON.parse(r.result);if(!v||!Array.isArray(v.tasks))throw 0;if(confirm("Заменить текущие задачи данными из копии?")){S=norm(v);save();render()}}catch(x){alert("Этот файл не похож на копию планера.")}e.target.value=""};r.readAsText(f)});
-{let p="week";try{p=localStorage.getItem("planner:tab")||"week"}catch(e){}showPage(p,true)}
+
+/* ---------- лента блоков: порядок секций ---------- */
+(function(){const w=document.querySelector(".wrap"),foot=$("foot");if(!w||!foot)return;
+  const P=n=>document.querySelector('.page[data-page="'+n+'"]');
+  const sd=document.querySelector(".someday");const sdPage=document.createElement("div");sdPage.className="page";sdPage.dataset.page="someday";if(sd)sdPage.append(sd);
+  ["week","day","projects","pay","ideas"].forEach(n=>{const p=P(n);if(p)w.insertBefore(p,foot)});w.insertBefore(sdPage,foot);
+})();
+
+showPage("week",true);
 afterLoad();render();scrollCalToNow();tick();setInterval(tick,10000);
 
 /* ---------- запуск синхронизации ---------- */
